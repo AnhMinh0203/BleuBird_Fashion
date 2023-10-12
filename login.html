@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/grid.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="./assets/css/login.css">
+    <script src="./assets/js/CallApi.js"></script>
+    <title>Login</title>
+</head>
+<body>
+    <div class="login">
+        <div class="grid wide">
+            <div class="row">
+                <div class="col l-4 l-o-4 m-6 m-o-3 c-8 c-o-2">
+                    <div class="login_form">
+                        <div class="login_form--heading">
+                            <h2>LOGIN</h2>
+                            <a class="prev" href="./index.html">&#10094;</a>
+                        </div>
+                        <!-- <a class="prev" href="./index.html">&#10094;</a> -->
+                        <div class="login_form--userName">
+                            <i class="fa-solid fa-user login_userName--icon"></i>
+                            <input type="text" name="userName" id="userName">
+                        </div>
+                        <div class="login_form--passWord">
+                            <i class="fa-solid fa-lock login_passWord--icon"></i>
+                            <input type="password" name="passWord" id="passWord">
+                            <i class="fa-solid fa-eye-slash login_hidePass--icon" id="login_showPass--icon" onclick="ShowHidenPass()" style="display: block;"></i>
+                            <i class="fa-solid fa-eye login_showPass--icon" id="login_hidenPass--icon" style="display: none;" onclick="ShowHidenPass()"></i>
+                        </div>
+                        <div class="login_form--forgetPass">
+                            <a href="#">Forget password</a>
+                            <span>
+                                <input type="checkbox">Remember me
+                            </span>
+                        </div>
+                        <div class="login_form--button" onclick="Login()"> 
+                            <a href="#">LOGIN</a>
+                        </div>
+                        <div class="sign_form">
+                            <a href="./register.html">Register</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./assets/js/login.js"></script>
+</body>
+</html>

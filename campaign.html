@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/grid.css">
+    <link rel="stylesheet" href="./assets/css/campaign.css">
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="./assets/js/CallApi.js"></script>
+    <!--Start of Fchat.vn--><script type="text/javascript" src="https://cdn.fchat.vn/assets/embed/webchat.js?id=650c64c238a7e370e77f9342" async="async"></script><!--End of Fchat.vn-->
+    <title>CAMPAIGN</title>
+</head>
+<body>
+    <div class="bluebird_fashion">
+        <div class="container_blue_fashion">
+            <!-- header -->
+            <div class="header">
+                <div class="gird wide">
+                    <div class="row no-gutters">
+                        <div class="col l-2 l-o-5 m-2 m-o-5 c-2 c-o-5">
+                            <div class="header__logo">
+                                <img src="./assets/img/Logo/imglogo.png" alt="logo">
+                            </div>
+                        </div>
+                        <div class="col l-3 m-3 c-3 ">
+                            <div class="header__search">
+                                <input type="text">
+                                <div class="header__search--icon">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="col l-1 m-1 c-1">
+                            <div class="header__cart">
+                                <li>
+                                    <a href="./cart.html"><i class="fa-solid fa-cart-shopping"></i></a>
+                                    <ul class="show_cart">
+                                        <a href="">
+                                            <li>
+                                                <div class="show_product" id="show_product">
+                                                    <a href="#" class="product_cart" id="product_cart">
+                                                        <img src="./assets/img/Bag/Bag1/bag1.1.jpg" alt="">
+                                                        <span>The Seag Bag</span>
+                                                        <span>$3200</span>
+                                                    </a>
+                                                    <a href="#" class="product_cart">
+                                                        <img src="./assets/img/Bag/Bag1/bag1.1.jpg" alt="">
+                                                        <span>The Seag Bag</span>
+                                                        <span>$3200</span>
+                                                    </a>
+                                                    <a href="#" class="product_cart">
+                                                        <img src="./assets/img/Bag/Bag1/bag1.1.jpg" alt="">
+                                                        <span>The Seag Bag</span>
+                                                        <span>$3200</span>
+                                                    </a>
+                                                    <a href="#" class="product_cart">
+                                                        <img src="./assets/img/Bag/Bag1/bag1.1.jpg" alt="">
+                                                        <span>The Seag Bag</span>
+                                                        <span>$3200</span>
+                                                    </a>
+                                                    <a href="#" class="product_cart">
+                                                        <img src="./assets/img/Bag/Bag1/bag1.1.jpg" alt="">
+                                                        <span>The Seag Bag</span>
+                                                        <span>$3200</span>
+                                                    </a>
+                                                    <a href="#" class="product_cart">
+                                                        <img src="./assets/img/Bag/Bag1/bag1.1.jpg" alt="">
+                                                        <span>The Seag Bag</span>
+                                                        <span>$3200</span>
+                                                    </a>
+                                                    <a href="#" class="product_cart">
+                                                        <img src="./assets/img/Bag/Bag1/bag1.1.jpg" alt="">
+                                                        <span>The Seag Bag</span>
+                                                        <span>$3200</span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                        </a>
+                                        <a href="">
+                                            <li></li>
+                                        </a>
+                                    </ul>
+                                </li>
+                            </div>
+                        </div>
+                        <div class="col l-1" id="div__login">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- / header / -->
+            <!-- navigation -->
+            <div class="navigation">
+                <div class="grid wide">
+                    <div class="row">
+                        <div class="col l-12 m-12 ">  
+                            <ul class="nav_list">
+                                <li class="nav_item">
+                                    <a class="nav_item--home" href="./index.html">HomePage</a>
+                                </li>
+                                
+                                <li class="nav_item">
+                                    <a class="nav_item--product" href="#">Product</a>
+                                    <ul class="product__item">
+                                        <a href="./vest.html">
+                                            <li class="product__item--vest">
+                                                <span>Vest</span>
+                                            </li>
+                                        </a>
+                                        <a href="./bag.html">
+                                            <li class="product__item--bag">
+                                                <span>Bag</span>
+                                            </li>
+                                        </a>
+                                        <a href="./campaign.html">
+                                            <li class="product__item--campaign">
+                                                <span>Campaign</span>
+                                            </li>
+                                        </a>
+                                        <a href="./shoe.html">
+                                            <li class="product__item--shoe">
+                                                <span>Shoe</span>
+                                            </li>
+                                        </a>
+                                    </ul>
+                                </li>
+                                <li class="nav_item">
+                                    <a class="nav_item--service" href="./service.html">Service</a>
+                                </li>
+                                <li class="nav_item">
+                                    <a class="nav_item--service" href="./blog.html">Blog</a>
+                                </li>
+                                <li class="nav_item">
+                                    <a class="nav_item--contact" href="#">Contact</a>
+                                </li>
+                                <!-- <li class="nav_item">
+                                    <a class="nav_item--login" id="nav_item--login" href="./login.html">Login</a>
+                                </li> -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            </div>
+            <!-- / navigation / -->
+            <!-- content -->
+            <div class="content">
+                <div class="content__heading">
+                    <h1>CAMPAIGN</h1>
+                </div>
+                <div class="product__campaign" id="campaignProduct">
+                    <div class="product product__one">
+                        <a href="#123">
+                            <img src="./assets/img/Campaign/Product1/product1.1.jpg" alt="">
+                        </a>
+                        <div class="product__one--name">
+                            <p>Patchwork Denim Jacket</p>
+                        </div>
+                        <div class="product__one--price">
+                            <span>$1,850</span>
+                        </div>
+                    </div>
+                    <div class="product product__two">
+                        <a href="#456">
+                            <img src="./assets/img/Campaign/Product2/product2.1.jpg" alt="">
+                        </a>
+                        <div class="product__two--name">
+                            <p>Hybrid Bomber Jacket</p>
+                        </div>
+                        <div class="product__two--price">
+                            <span>$3,890</span>
+                        </div>
+                    </div>
+                    <div class="product product__three">
+                        <a href="#456">
+                            <img src="./assets/img/Campaign/Product3/product3.1.jpg" alt="">
+                        </a>
+                        <div class="product__three--name">
+                            <p>Orchid Bomber Jacket</p>
+                        </div>
+                        <div class="product__three--price">
+                            <span>$3,450</span>
+                        </div>
+                    </div>
+                    <div class="product product__four">
+                        <a href="#456">
+                            <img src="./assets/img/Campaign/Product4/product4.1.jpg" alt="">
+                        </a>
+                        <div class="product__four--name">
+                            <p>Patchwork Workwear Jeans</p>
+                        </div>
+                        <div class="product__four--price">
+                            <span>$1,380</span>
+                        </div>
+                    </div>
+                    <div class="product product__five">
+                        <a href="#456">
+                            <img src="./assets/img/Campaign/Product5/product5.1.jpg" alt="">
+                        </a>
+                        <div class="product__five--name">
+                            <p>Harness Shirt</p>
+                        </div>
+                        <div class="product__five--price">
+                            <span>$630</span>
+                        </div>
+                    </div>
+                    <div class="product product__six">
+                        <a href="#456">
+                            <img src="./assets/img/Campaign/Product6/product6.1.jpg" alt="">
+                        </a>
+                        <div class="product__six--name">
+                            <p>Orchid Shirt</p>
+                        </div>
+                        <div class="product__six--price">
+                            <span>$1,050</span>
+                        </div>
+                    </div>
+                    <div class="product product__seven">
+                        <a href="#456">
+                            <img src="./assets/img/Campaign/Product7/product7.1.jpg" alt="">
+                        </a>
+                        <div class="product__seven--name">
+                            <p>Varsity T-shirt</p>
+                        </div>
+                        <div class="product__seven--price">
+                            <span>$490</span>
+                        </div>
+                    </div>
+                    <div class="product product__eight">
+                        <a href="#456">
+                            <img src="./assets/img/Campaign/Product8/product8.1.jpg" alt="">
+                        </a>
+                        <div class="product__eight--name">
+                            <p>Solarised Skull T-shirt</p>
+                        </div>
+                        <div class="product__eight--price">
+                            <span>$450</span>
+                        </div>
+                    </div>
+                    <div class="product product__nine">
+                        <a href="#456">
+                            <img src="./assets/img/Campaign/Product9/product9.1.jpg" alt="">
+                        </a>
+                        <div class="product__nine--name">
+                            <p>Military Pocket Blouson</p>
+                        </div>
+                        <div class="product__nine--price">
+                            <span>$1,690</span>
+                        </div>
+                    </div><div class="product product__ten">
+                        <a href="#456">
+                            <img src="./assets/img/Campaign/Product10/product10.1.jpg" alt="">
+                        </a>
+                        <div class="product__ten--name">
+                            <p>Cotton Mesh Polo Shirt</p>
+                        </div>
+                        <div class="product__ten--price">
+                            <span>$1,150</span>
+                        </div>
+                    </div>
+                    <div class="product product__eleven">
+                        <a href="#456">
+                            <img src="./assets/img/Campaign/Product11/product11.1.jpg" alt="">
+                        </a>
+                        <div class="product__eleven--name">
+                            <p>Feather Jet Embroidery Tie</p>
+                        </div>
+                        <div class="product__eleven--price">
+                            <span>$350</span>
+                        </div>
+                    </div>
+                    <div class="product product__tweny">
+                        <a href="#456">
+                            <img src="./assets/img/Campaign/Product12/product12.1.jpg" alt="">
+                        </a>
+                        <div class="product__tweny--name">
+                            <p>Graffiti Hawaiian Shirt</p>
+                        </div>
+                        <div class="product__tweny--price">
+                            <span>$1,050</span>
+                        </div>
+                    </div>
+                    <div class="product product__thirdteen">
+                        <a href="#456">
+                            <img src="./assets/img/Campaign/Product13/product13.1.jpg" alt="">
+                        </a>
+                        <div class="product__thirdteen--name">
+                            <p>Graffiti Hooded Sweatshirt</p>
+                        </div>
+                        <div class="product__thirdteen--price">
+                            <span>$820</span>
+                        </div>
+                    </div>
+                    <div class="product product__fourteen">
+                        <a href="#456">
+                            <img src="./assets/img/Campaign/Product14/product14.1.jpg" alt="">
+                        </a>
+                        <div class="product__fourteen--name">
+                            <p>Darted Jeans<p>
+                        </div>
+                        <div class="product__fourteen--price">
+                            <span>$870</span>
+                        </div>
+                    </div>
+                    <div class="product product__fifteen">
+                        <a href="#456">
+                            <img src="./assets/img/Campaign/Product15/product15.1.jpg" alt="">
+                        </a>    
+                        <div class="product__fifteen--name">
+                            <p>Solarised Flower Jumper</p>
+                        </div>
+                        <div class="product__fifteen--price">
+                            <span>$1270</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /content/ -->
+            <!-- footer -->
+            <div class="footer">
+                <div class="grid wide">
+                    <div class="row no-gutters">
+                        <div class="col l-3 m-5 c-12">
+                            <div class="footer_about">
+                                <h2>Abour Us</h2>
+                                <ul class="footer_about--container">
+                                    <li class="footer_about--item ">
+                                        <i class="fa-solid fa-chevron-right footer_icon--right"></i>
+                                        <a href="#">Introduce</a>
+                                    </li>
+                                    <li class="footer_about--item ">
+                                        <i class="fa-solid fa-chevron-right footer_icon--right"></i>
+                                        <a href="#">Product</a>
+                                    </li>
+                                    <li class="footer_about--item ">
+                                        <i class="fa-solid fa-chevron-right footer_icon--right"></i>
+                                        <a href="#">Service</a>
+                                    </li>
+                                    <li class="footer_about--item ">
+                                        <i class="fa-solid fa-chevron-right footer_icon--right"></i>
+                                        <a href="#"> Anti Counterfeiting</a>
+                                    </li>
+                                </ul>
+                            </div>  
+                        </div>
+                        <div class="col l-3 m-5 c-12">
+                            <div class="footer_contact">
+                                <h2>Contact</h2>
+                                <ul class="footer_contact--container">
+                                    <li class="footer_contact--item">
+                                        <i class="fa-sharp fa-solid fa-location-dot footer_icon--address"></i>
+                                        <span>Address:Bellevue,  Washington, United States</span>
+                                    </li>
+                                    <li class="footer_contact--item">
+                                        <i class="fa-solid fa-phone footer_icon--phone"></i>
+                                        <span>Phone number: 0123456789</span>
+                                    </li>
+                                    <li class="footer_contact--item">
+                                        <i class="fa-solid fa-envelope footer_icon--email"></i>
+                                        <span>Email: bluebird@gmail.com</span> 
+                                    </li>
+                                </ul>
+                            </div>  
+                        </div>
+                        <div class="col l-3 m-5 c-12">
+                            <div class="footer_office">
+                                <h2>Office Hours</h2>
+                                <div class="time_open">
+                                    <span>Monday - Friday </span><br>
+                                    <span>8:00 - 17:30</span>
+                                </div>
+                                <div class="time_open">
+                                    <span>Saturday - Sunday </span><br>
+                                    <span>8:30 - 17:00</span>
+                                </div>
+                            </div>  
+                        </div>
+                        <div class="col l-3 m-5 c-12">
+                            <div class="footer_follow">
+                                <h2>Follow Us</h2>
+                                <ul class="footer_follow--container">
+                                    <li class="footer_follow--item">
+                                        <i class="fa-brands fa-facebook"></i>
+                                        <span>Facebook</span>
+                                    </li>
+                                    <li class="footer_follow--item">
+                                        <i class="fa-brands fa-square-instagram"></i>
+                                        <span>Instagram</span>
+                                    </li>
+                                    <li class="footer_follow--item">
+                                        <i class="fa-brands fa-youtube"></i>
+                                        <span>Youtube</span>
+                                    </li>
+                                    <li class="footer_follow--item">
+                                        <i class="fa-brands fa-twitter"></i>
+                                        <span>Twitter</span>
+                                    </li>
+                                </ul>
+                            </div>  
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- footer -->
+        </div>
+    </div>
+    <script>
+        //Đổi tên 
+        var fullname = localStorage.getItem("fullname");
+            if(fullname != null) {
+                var dataContainer = document.getElementById("div__login");
+                var CreateLoutOut = document.createElement("div")
+                CreateLoutOut.className = "header__login";
+                CreateLoutOut.innerHTML = `
+                    <li>
+                        <a href="#" id="fullName">${fullname}</a>
+                        <ul class="select_option">
+                            <a href="./profile.html">
+                                <li class="account_management">Account management</li>
+                            </a>
+                            <a href="./login.html">
+                                <li class="log_out">Log out</li>
+                            </a>
+                        </ul>
+                    </li>
+                `;
+                dataContainer.appendChild(CreateLoutOut);
+            }
+            else {
+                var dataContainer = document.getElementById("div__login");
+                var CreateLoutOut = document.createElement("div")
+                CreateLoutOut.className = "header__login";
+                CreateLoutOut.innerHTML = `
+                    <a href="./login.html" id="fullName">Login</a>
+                `;
+                dataContainer.appendChild(CreateLoutOut);
+            }
+        // Hiển thị Bags
+        displayPageBagByProductType(1, 'CAMPAIGN', 'campaignProduct', 'CAMPAIGN');
+        GetAllCartHover(1, 100,' ')
+    </script>
+</body>
+</html>

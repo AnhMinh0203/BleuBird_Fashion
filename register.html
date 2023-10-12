@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/grid.css">
+    <link rel="stylesheet" href="./assets/css/register.css">
+    <script src="./assets/js/CallApi.js"></script>
+    <title>Sign In</title>
+</head>
+<body>
+    <div class="register">
+        <div class="gird wide">
+            <div class="row no-gutters">
+                <div class="col l-4 l-o-4 m-6 m-o-3 c-8 c-o-2">
+                    <div class="register_form">
+                        <div class="register_form--heading">
+                            <h2>REGISTER</h2>
+                            <a class="prev" href="./login.html">&#10094;</a>
+                        </div>
+                        <div class="register_form--infor">
+                            <div class="infor-firstname">
+                                <input type="text" placeholder="First Name" id="first_name">
+                            </div>
+                            <div class="infor-lastname">
+                                <input type="text" placeholder="Last Name" id="last_name">
+                            </div>
+                            <div class="infor-username">
+                                <input type="text" placeholder="User Name" id="email">
+                            </div>
+                            <div class="infor-password">
+                                <input type="password" placeholder="Password" id="password">
+                            </div>
+                            <div class="infor-enterpassword">
+                                <input type="password" placeholder="Enter Password" id="confirm_password">
+                            </div>
+                            <div class="infor-phonenumber">
+                                <input type="text" placeholder="Phone number" id="phone_number">
+                            </div>
+                            <div class="infor-address">
+                                <input type="text" placeholder="Address" id="address">
+                            </div>
+                            <div class="register_form--checkAccount">
+                                <input type="checkbox" id="action">
+                                <span>Sale account</span>
+                            </div>
+                        </div>
+                        <div class="register_form--shop">
+                            <div class="register_shop--img">
+                                <p>Thêm ảnh cho shop của bạn</p>
+                                <input type="text" id="imageInput">
+                            </div>
+                            <div class="register_shop--name">
+                                <input type="text" id="brandName" placeholder="Brand Name">
+                            </div>
+                        </div>
+                        <div onclick="SignIn()">
+                            <button>REGISTER</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./assets/js/register.js"></script>
+</body>
+</html>

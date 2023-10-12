@@ -1,0 +1,2353 @@
+create database WebsiteFashion
+go
+
+USE [WebsiteFashion]
+GO
+/****** Object:  User [Nguyenvanhieu]    Script Date: 24/09/2023 3:14:38 PM ******/
+CREATE USER [Nguyenvanhieu] FOR LOGIN [Nguyenvanhieu] WITH DEFAULT_SCHEMA=[dbo]
+GO
+/****** Object:  UserDefinedTableType [dbo].[CartModelTVP]    Script Date: 24/09/2023 3:14:38 PM ******/
+CREATE TYPE [dbo].[CartModelTVP] AS TABLE(
+	[Id] [uniqueidentifier] NULL,
+	[IdUser] [uniqueidentifier] NULL,
+	[IdProduct] [uniqueidentifier] NULL,
+	[Number] [int] NULL
+)
+GO
+/****** Object:  Table [dbo].[Cart]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Cart](
+	[Id] [uniqueidentifier] NOT NULL,
+	[IdUser] [uniqueidentifier] NULL,
+	[IdProduct] [uniqueidentifier] NULL,
+	[Number] [int] NULL,
+	[TotalPrice] [float] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Discount]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Discount](
+	[Id] [uniqueidentifier] NOT NULL,
+	[Name] [nvarchar](max) NULL,
+	[Percents] [float] NULL,
+	[DateStart] [date] NULL,
+	[DateEnd] [date] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[FeedBack]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[FeedBack](
+	[Id] [uniqueidentifier] NOT NULL,
+	[IdUser] [uniqueidentifier] NULL,
+	[IdProduct] [uniqueidentifier] NULL,
+	[Description] [nvarchar](max) NULL,
+	[CreateDate] [date] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Image]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Image](
+	[Id] [uniqueidentifier] NOT NULL,
+	[IdProduct] [uniqueidentifier] NULL,
+	[Img] [nvarchar](max) NULL,
+	[UsedStatus] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Orders]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Orders](
+	[Id] [uniqueidentifier] NOT NULL,
+	[IdUser] [uniqueidentifier] NULL,
+	[IdCart] [uniqueidentifier] NULL,
+	[IdProductDetail] [uniqueidentifier] NULL,
+	[IdDiscount] [uniqueidentifier] NULL,
+	[Description] [nvarchar](max) NULL,
+	[Number] [int] NULL,
+	[PriceShip] [float] NULL,
+	[TotalPrice] [float] NULL,
+	[CreateBy] [uniqueidentifier] NULL,
+	[CreateDate] [date] NULL,
+	[ModifierBy] [uniqueidentifier] NULL,
+	[ModifierDate] [date] NULL,
+	[UsedStatus] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Producer]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Producer](
+	[Id] [uniqueidentifier] NOT NULL,
+	[Name] [nvarchar](255) NULL,
+	[Country] [nvarchar](255) NULL,
+	[Address] [nvarchar](max) NULL,
+	[Description] [nvarchar](max) NULL,
+	[UsedStated] [int] NULL,
+	[CreateBy] [uniqueidentifier] NULL,
+	[CreateDate] [date] NULL,
+	[ModifiedBy] [uniqueidentifier] NULL,
+	[ModifiedDate] [date] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Product]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Product](
+	[Id] [uniqueidentifier] NOT NULL,
+	[Name] [nvarchar](255) NULL,
+	[IdProducer] [uniqueidentifier] NULL,
+	[IdProductType] [uniqueidentifier] NULL,
+	[Material] [nvarchar](255) NULL,
+	[Price] [float] NULL,
+	[Description] [nvarchar](max) NULL,
+	[CreateBy] [uniqueidentifier] NULL,
+	[CreateDate] [date] NULL,
+	[ModifiedBy] [uniqueidentifier] NULL,
+	[ModifiedDate] [date] NULL,
+	[UsedStatus] [int] NULL,
+	[IdDiscount] [uniqueidentifier] NULL,
+	[IdShop] [uniqueidentifier] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Product_Detail]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Product_Detail](
+	[Id] [uniqueidentifier] NOT NULL,
+	[IdProduct] [uniqueidentifier] NULL,
+	[Number] [int] NULL,
+	[Description] [nvarchar](max) NULL,
+	[CreateBy] [uniqueidentifier] NULL,
+	[CreateDate] [date] NULL,
+	[ModifiedBy] [uniqueidentifier] NULL,
+	[ModifiedDate] [date] NULL,
+	[Color] [nvarchar](255) NULL,
+	[Size] [nvarchar](255) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ProductType]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ProductType](
+	[Id] [uniqueidentifier] NOT NULL,
+	[Name] [nvarchar](255) NULL,
+	[Description] [nvarchar](max) NULL,
+	[CreateBy] [uniqueidentifier] NULL,
+	[CreateDate] [date] NULL,
+	[ModifiedBy] [uniqueidentifier] NULL,
+	[ModifiedDate] [date] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Shop]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Shop](
+	[Id] [uniqueidentifier] NOT NULL,
+	[IdUser] [uniqueidentifier] NULL,
+	[BrandName] [nvarchar](max) NULL,
+	[Avata] [nvarchar](max) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[UsedStatus]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[UsedStatus](
+	[Number] [int] NULL,
+	[Name] [nvarchar](255) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Users]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Users](
+	[Id] [uniqueidentifier] NOT NULL,
+	[FirstName] [nvarchar](max) NULL,
+	[LastName] [nvarchar](max) NULL,
+	[FullName] [nvarchar](max) NULL,
+	[Email] [nvarchar](255) NULL,
+	[PassWordHas] [nvarchar](255) NULL,
+	[Phone] [int] NULL,
+	[Address] [nvarchar](max) NULL,
+	[Gender] [int] NULL,
+	[DateOfBirth] [date] NULL,
+	[Avata] [nvarchar](max) NULL,
+	[UsedState] [int] NULL,
+	[Description] [nvarchar](max) NULL,
+	[CreateBy] [uniqueidentifier] NULL,
+	[CreateDate] [date] NULL,
+	[ModifiedBy] [uniqueidentifier] NULL,
+	[ModifiedDate] [date] NULL,
+	[Roles] [nvarchar](255) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+INSERT [dbo].[Cart] ([Id], [IdUser], [IdProduct], [Number], [TotalPrice]) VALUES (N'193817f4-e2a3-4342-a9ed-20cd5be9662e', N'13e2096d-a2e1-4301-884f-613d5598bfba', N'fe64fedd-80b6-4c05-b52e-6b3114011b47', 2, 9180)
+GO
+INSERT [dbo].[Cart] ([Id], [IdUser], [IdProduct], [Number], [TotalPrice]) VALUES (N'b6250446-0534-4293-ae81-2d8a35de61e0', N'13e2096d-a2e1-4301-884f-613d5598bfba', N'2aa4ea77-f918-4295-97c9-26e3fe7ce4dc', 1, 4590)
+GO
+INSERT [dbo].[Cart] ([Id], [IdUser], [IdProduct], [Number], [TotalPrice]) VALUES (N'2c91fba1-ef81-4b48-b686-721458c1bb2e', N'2766104d-32f5-4861-adcb-8090fd46defd', N'3ff3a9b2-24ad-48d1-b0ed-62373cf66aa4', 3, 3.57)
+GO
+INSERT [dbo].[Cart] ([Id], [IdUser], [IdProduct], [Number], [TotalPrice]) VALUES (N'3d9420b4-c7ba-4dec-bdc3-7bf501b0d22c', N'2766104d-32f5-4861-adcb-8090fd46defd', N'8e709d5f-26e3-46a5-bca4-1cd532fad310', 23, 27.37)
+GO
+INSERT [dbo].[Cart] ([Id], [IdUser], [IdProduct], [Number], [TotalPrice]) VALUES (N'1b2d12dc-145d-491f-9b1d-c0b84c74af7b', N'13e2096d-a2e1-4301-884f-613d5598bfba', N'8b503bde-618b-431c-9fee-a6a9554e99bb', 4, 18360)
+GO
+INSERT [dbo].[Discount] ([Id], [Name], [Percents], [DateStart], [DateEnd]) VALUES (N'03f0abcc-f8d5-42ce-b379-083a3b900efa', N'Discount 15/9', 15, NULL, NULL)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'2dfcc152-fa98-44ac-b92b-011ade87d6bd', N'5df57d0c-5f00-4775-a9bf-da5079af0c94', N'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-gi%C3%A0y-l%C6%B0%E1%BB%9Di-major-gi%C3%A0y--BQEL1XGZ02_PM1_Side%20view.png?wid=1090&hei=1090', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'5322ee48-aab5-4697-b83d-069ce0b7fcd4', N'c883f948-785f-4f4f-b286-cbd4e50408f9', N'https://amq-mcq.dam.kering.com/m/deb44276f08740a/Large-7557031BLE11000_F.jpg?v=5', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'ab85e8b4-4cf1-4d71-875d-087f5d04e8fb', N'0ed38557-a754-4826-a444-8dbceb77d3d4', N'https://amq-mcq.dam.kering.com/m/e2b489111b9262d/Large-731136D78EF1000_F.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'd4a9a0ea-a5e8-4aa4-ab6e-091a9ca9a738', N'4c9fa45d-14ce-46a3-8008-6fae1a5bf3e7', N'https://amq-mcq.dam.kering.com/m/2492a11da065ad69/Large-6564671YB419090_F.jpg?v=3', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'9ff07369-2f82-442d-a843-0a5a2669cae6', N'9e1191be-2935-4a2a-b10d-8b94e8ab3461', N'https://amq-mcq.dam.kering.com/m/6c99c9ec419b85d4/Large-759111QVZ210903_E.jpg?v=1', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'59009d90-367b-4415-9a4b-0b29a7dfbba7', N'81515973-84b5-472f-be8f-3766917f4c84', N'https://amq-mcq.dam.kering.com/m/57bf4ea5283e37a0/Large-604253WHZ801000_F.jpg?v=1', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'7285868d-4690-4aff-9abd-0c13bcd97eb0', N'a4a2f464-edef-4faf-a553-d2a74dcaf740', N'https://amq-mcq.dam.kering.com/m/682244d243a2ee4d/Large-749655QVU911000_D.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'a5dcc548-29e8-4d71-a716-0f3da9bf184c', N'51e078f4-0b83-469c-a915-ddb1bbcfc0fa', N'https://amq-mcq.dam.kering.com/m/6ff90f631f63cb9c/Large-624753QPN449000_R.jpg?v=3', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'293baefb-de1a-4ae5-af75-17207180b3d8', N'3be4d5a8-705e-4515-a679-2cb15997b274', N'https://amq-mcq.dam.kering.com/m/56283200002bef06/Large-749650QVU634100_R.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'0b10d091-5d9e-4a11-9549-18188653f0ca', N'0ed38557-a754-4826-a444-8dbceb77d3d4', N'https://amq-mcq.dam.kering.com/m/59dcc5d94529621d/Large-731136D78EF1000_R.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'0908b84d-250b-45aa-8ebb-19a5ca8c766f', N'4c9fa45d-14ce-46a3-8008-6fae1a5bf3e7', N'https://amq-mcq.dam.kering.com/m/4302c58185579e66/Large-6564671YB419090_R.jpg?v=3', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'cd5ea047-86c8-4770-8b66-1b92f0d79613', N'69874bb5-3606-49a5-9755-ccb5ec31d892', N'https://amq-mcq.dam.kering.com/m/652db709cda903c4/Large-704901QTU634150_F.jpg?v=1', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'43c645ae-4c1e-4cf6-bebf-1d1783b70166', N'9ee587b0-2e08-413c-96c4-11a89fbdc473', N'https://amq-mcq.dam.kering.com/m/3011aa7cbedd9beb/Large-759112QVZ210903_D.jpg?v=1', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'f141d954-880d-46ad-abc8-1edf12fd7d3c', N'77e91cbd-6575-42c1-a740-648740feeb1b', N'https://amq-mcq.dam.kering.com/m/62f3e893413ff89a/Large-754867QVR173410_R.jpg?v=1', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'e69f64bb-8f43-49b7-bb47-21352e19cd6f', N'a976c3bb-4319-4992-a8db-9bdb89118587', N'https://amq-mcq.dam.kering.com/m/3a2f3a8cd028d840/Large-750381WIDY11081_D.jpg?v=1', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'06ba75ce-0504-44d0-8dfc-2c6d89e61a0a', N'c883f948-785f-4f4f-b286-cbd4e50408f9', N'https://amq-mcq.dam.kering.com/m/711a7915a15622a1/Large-7557031BLE11000_D.jpg?v=5', NULL)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'fc18689c-6ae8-4ec2-acea-2f0676145395', N'd4b648e9-6db0-42f1-bc46-aadfd61ed404', N'https://amq-mcq.dam.kering.com/m/57a23e21f42823d8/Large-760447Q5HXX1000_R.jpg?v=3', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'9fee118d-01b4-47d5-851c-2fac43568a3b', N'65737a11-bf28-45a5-be76-6b15a12238ca', N'https://amq-mcq.dam.kering.com/m/2e4ee56976ed117f/Large-7093441BLEG1090_R.jpg?v=1', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'cf72a218-3c70-4465-b865-30f3ee050b0e', N'd4b648e9-6db0-42f1-bc46-aadfd61ed404', N'https://amq-mcq.dam.kering.com/m/1282729d01264fd4/Large-760447Q5HXX1000_E.jpg?v=1', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'15ffb3b3-e1b1-4010-9e52-358dfe3693c1', N'48d38fbd-0d8b-4667-82c8-cc98a051ecef', N'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-gi%C3%A0y-th%E1%BB%83-thao-lv-skate-gi%C3%A0y--BQ9U2PMI54_PM1_Side%20view.png?wid=1090&hei=1090', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'bf91a524-45e5-4179-9104-36d181b4bb79', N'81515973-84b5-472f-be8f-3766917f4c84', N'https://amq-mcq.dam.kering.com/m/7e3239ff6f813636/Large-604253WHZ801000_R.jpg?v=1', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'01a68d98-ab6d-435e-b756-36f73105a907', N'9e1191be-2935-4a2a-b10d-8b94e8ab3461', N'https://amq-mcq.dam.kering.com/m/7d9c7a7b603fff5c/Large-759111QVZ210903_R.jpg?v=1', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'11160505-318e-41df-aa8b-37d14c92e87a', N'92ea0112-f3fe-4fed-b25a-3c9b542b1231', N'https://amq-mcq.dam.kering.com/m/4d01177d2d1a940/Large-7430911BLGG9210_F.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'811deb38-1073-48a3-b556-38370a7a341b', N'29d9002b-036c-4ecc-95a4-4cb7cbe51021', N'https://amq-mcq.dam.kering.com/m/130bf394242a7ed4/Large-7554551T1A88550_F.jpg?v=2', NULL)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'c3e3d87c-eaa7-4971-9202-388a0fafc7ec', N'a4a2f464-edef-4faf-a553-d2a74dcaf740', N'https://amq-mcq.dam.kering.com/m/6874e2e6b1ee4ae3/Large-749655QVU911000_R.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'7b4dcf5f-216a-4df1-82ab-399c2fdaff4c', N'65737a11-bf28-45a5-be76-6b15a12238ca', N'https://amq-mcq.dam.kering.com/m/7e801830cc05f9db/Large-7093441BLEG1090_E.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'f74ad150-af7f-43ad-990e-39a31e6cdce3', N'786db983-074b-4a71-a20d-b4d3cb86dd81', N'https://amq-mcq.dam.kering.com/m/520ef561417f1868/Large-5541281HB0T9006_F.jpg?v=3', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'9b8f9a25-d3eb-43c4-9eea-39c89c7c5ec7', N'48d38fbd-0d8b-4667-82c8-cc98a051ecef', N'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-gi%C3%A0y-th%E1%BB%83-thao-lv-skate-gi%C3%A0y--BQ9U2PMI54_PM2_Front%20view.png?wid=1090&hei=1090', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'6febac51-fa97-4657-8997-3c2984ca78d9', N'91bd6944-aa29-4901-a9bd-ad1ac37b7914', N'https://amq-mcq.dam.kering.com/m/94223c0bfcdbe51/Large-752059Q1GBZ1014_D.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'e0e3775d-be69-4b83-a64f-3dc4e60f9e49', N'18fa1179-a689-4d20-88f3-4b239decbeb2', N'https://amq-mcq.dam.kering.com/m/6423183c6e1feb77/Large-705659W4MV29000_R.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'2f8d2421-20c1-4407-8020-3ee981586479', N'786db983-074b-4a71-a20d-b4d3cb86dd81', N'https://amq-mcq.dam.kering.com/m/11c42a7c7a06cbb9/Large-5541281HB0T9006_A.jpg?v=3', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'66d2a9d7-e53f-4d24-b98a-41b3b0f34546', N'77e91cbd-6575-42c1-a740-648740feeb1b', N'https://amq-mcq.dam.kering.com/m/3d6039aa81034a62/Large-754867QVR173410_E.jpg?v=1', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'286dea29-6a1f-4b18-ad1d-42d83cdcf2ee', N'77e91cbd-6575-42c1-a740-648740feeb1b', N'https://amq-mcq.dam.kering.com/m/527a3cbcc1885fcc/Large-754867QVR173410_D.jpg?v=1', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'f1c3d3b4-7cb5-4d62-82b9-459ea18be466', N'c68da26d-1dd1-4619-9e8f-2cd3b16198cf', N'https://amq-mcq.dam.kering.com/m/49bb6030d18bca4e/Large-750241QVU911000_E.jpg?v=1', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'9bb7423b-a29a-4237-a5af-4790f7f6055e', N'7aa7a7cf-cb03-4107-ab4f-6a567b98f6f7', N'https://amq-mcq.dam.kering.com/m/6c5401b2be44dee0/Large-750237QVU911000_R.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'08bf581b-d04f-4f65-817f-47a9eaaae7e7', N'9ee587b0-2e08-413c-96c4-11a89fbdc473', N'https://amq-mcq.dam.kering.com/m/6ab8fa3e0d9fe0e7/Large-759112QVZ210903_E.jpg?v=1', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'6bed8fef-95aa-4284-a96c-4b2a37f03667', N'b60a6c5f-1b4e-4270-8339-49a8c1a5bf47', N'https://amq-mcq.dam.kering.com/m/76b043d8ba102bb3/Large-7562511T1A67048_E.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'92b59d10-4f20-47ac-8ee6-4b9b3c613325', N'3be4d5a8-705e-4515-a679-2cb15997b274', N'https://amq-mcq.dam.kering.com/m/72ca2bb03f7e683e/Large-749650QVU634100_E.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'd424dccb-a8b3-4b15-b5dc-4de0812b7b6e', N'9e3eae3a-5599-47db-8bcf-728d4e5f6e8b', N'https://amq-mcq.dam.kering.com/m/3128847a977bc91f/Large-7438351BLCH4000_R.jpg?v=1', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'd1c19ff1-d0d5-4961-b2da-4fd70ab97386', N'7aa7a7cf-cb03-4107-ab4f-6a567b98f6f7', N'https://amq-mcq.dam.kering.com/m/2cf4645b0738b102/Large-750237QVU911000_F.jpg?v=2', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'bb9b1464-b441-44a6-a704-501a4956764c', N'f1526d67-e08d-44e0-a138-575cad4482ed', N'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-gi%C3%A0y-th%E1%BB%83-thao-lv-skate-gi%C3%A0y--BQ9U2PMI54_PM1_Interior%20view.png?wid=1090&hei=1090', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'4bce795e-f5ad-408d-9a28-51cfe2e578f5', N'48d38fbd-0d8b-4667-82c8-cc98a051ecef', N'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-gi%C3%A0y-th%E1%BB%83-thao-lv-skate-gi%C3%A0y--BQ9U2PMI54_PM1_Interior%20view.png?wid=1090&hei=1090', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'dff12498-9fa3-4e95-9e3f-523dd5831c59', N'4c9fa45d-14ce-46a3-8008-6fae1a5bf3e7', N'https://amq-mcq.dam.kering.com/m/60d741840ae3f65e/Large-6564671YB419090_A.jpg?v=1', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'895bbb9b-82db-42c6-975b-52a2b4d78189', N'786db983-074b-4a71-a20d-b4d3cb86dd81', N'https://amq-mcq.dam.kering.com/m/53d0837a1efe8eac/Large-5541281HB0T9006_R.jpg?v=3', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'fb565491-3d05-4f6c-b2f2-53f732220172', N'92ea0112-f3fe-4fed-b25a-3c9b542b1231', N'https://amq-mcq.dam.kering.com/m/3ef01d0672c38fe9/Large-7430911BLGG9210_M.jpg?v=1', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'b30a5e96-b46b-4bd6-ab0c-54ac058ef7f1', N'7aa7a7cf-cb03-4107-ab4f-6a567b98f6f7', N'https://amq-mcq.dam.kering.com/m/2a9d299ded2366b0/Large-750237QVU911000_D.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'ff72d20b-f063-4f05-9fc5-579854f5b3bc', N'18fa1179-a689-4d20-88f3-4b239decbeb2', N'https://amq-mcq.dam.kering.com/m/3c13c4f3dacf2a1f/Large-705659W4MV29000_F.jpg?v=2', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'fbd776be-dfc4-4b4a-a814-5aa6652d2140', N'93726eae-33a2-4f02-82c8-f4e02323c5f2', N'https://amq-mcq.dam.kering.com/m/32fc684ac9ce73b0/Large-7311361YBE74290_F.jpg?v=1', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'bbc50332-84e1-491e-bb8e-5cf524fcd9d1', N'b60a6c5f-1b4e-4270-8339-49a8c1a5bf47', N'https://amq-mcq.dam.kering.com/m/22c9eadf88ab1be1/Large-7562511T1A67048_F.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'5b02bd03-3247-4563-b892-5dc0c79c49ef', N'9ee587b0-2e08-413c-96c4-11a89fbdc473', N'https://amq-mcq.dam.kering.com/m/7184fd6229afa46c/Large-759112QVZ210903_F.jpg?v=1', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'67930acb-02a6-43cd-beab-5f096780dca1', N'20c93f49-86ed-4b65-973a-4018393b8fc9', N'https://amq-mcq.dam.kering.com/m/427349d4841389e/Large-758774WHZ6U1000_F.jpg?v=1', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'eb01e303-5176-474e-940b-5fc62c2e59a4', N'20c93f49-86ed-4b65-973a-4018393b8fc9', N'https://amq-mcq.dam.kering.com/m/57249a8e5c3a8f12/Large-758774WHZ6U1000_D.jpg?v=1', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'04cf8de6-6c11-4a61-a303-61a80814fe94', N'a976c3bb-4319-4992-a8db-9bdb89118587', N'https://amq-mcq.dam.kering.com/m/43c0f21d2b536bda/Large-750381WIDY11081_R.jpg?v=1', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'fbe5f462-2f4b-41f6-b723-6314ac33fb3f', N'93726eae-33a2-4f02-82c8-f4e02323c5f2', N'https://amq-mcq.dam.kering.com/m/8731235bee385d0/Large-7311361YBE74290_R.jpg?v=1', NULL)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'96dd2c1b-cbe9-4061-addf-68baec8e6dd4', N'9e1191be-2935-4a2a-b10d-8b94e8ab3461', N'https://amq-mcq.dam.kering.com/m/5e58e08365e2820b/Large-759111QVZ210903_D.jpg?v=1', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'67f6667e-721c-4541-9d03-6afddebd619f', N'77e91cbd-6575-42c1-a740-648740feeb1b', N'https://amq-mcq.dam.kering.com/m/17ea7ca27a23f9b8/Large-754867QVR173410_F.jpg?v=1', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'1fa66cde-551a-4759-a251-6e2ec000abb2', N'69874bb5-3606-49a5-9755-ccb5ec31d892', N'https://amq-mcq.dam.kering.com/m/6bd4bbd60a9b336/Large-704901QTU634150_R.jpg?v=1', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'4ed7bcd5-bad8-4ed2-a9e1-6ee9bab0c130', N'3be4d5a8-705e-4515-a679-2cb15997b274', N'https://amq-mcq.dam.kering.com/m/4fe8f273266e7e4e/Large-749650QVU634100_F.jpg?v=5', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'48ae2b10-1018-4131-b8eb-730c0262f57d', N'caabb41b-171a-4f7b-928d-c67e05fe5b7e', N'https://amq-mcq.dam.kering.com/m/66765978ad73ee11/Large-731136DYTAB5618_R.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'1bc65c01-3528-441b-a094-77914d06af1e', N'b60a6c5f-1b4e-4270-8339-49a8c1a5bf47', N'https://amq-mcq.dam.kering.com/m/16c2cac9d847c48b/Large-7562511T1A67048_A.jpg?v=1', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'1e03e3a1-2021-474c-90e5-7898e4fbed3d', N'0ed38557-a754-4826-a444-8dbceb77d3d4', N'https://amq-mcq.dam.kering.com/m/3faab94d6c6d55af/Large-731136D78EF1000_A.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'c7fffe8c-0665-4b5f-8511-78d4bc30a0c6', N'93726eae-33a2-4f02-82c8-f4e02323c5f2', N'https://amq-mcq.dam.kering.com/m/6bd248331865703b/Large-7311361YBE74290_A.jpg?v=1', NULL)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'76eb479c-d690-453a-80f1-7ad4d8092a83', N'a4a2f464-edef-4faf-a553-d2a74dcaf740', N'https://amq-mcq.dam.kering.com/m/3344d5d6c3d44d17/Large-749655QVU911000_F.jpg?v=4', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'b71e0b9e-3cc8-472d-8782-7dbbc2d22ca0', N'9e3eae3a-5599-47db-8bcf-728d4e5f6e8b', N'https://amq-mcq.dam.kering.com/m/23ccce02fdd22c5c/Large-7438351BLCH4000_F.jpg?v=1', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'a23379b2-edbc-48e1-956c-8048c4125f73', N'29d9002b-036c-4ecc-95a4-4cb7cbe51021', N'https://amq-mcq.dam.kering.com/m/2cf00e1e7fa14fd3/Large-7554551T1A88550_R.jpg?v=2', NULL)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'9716a2ec-4e4f-4972-9843-83252ee4fd9b', N'51e078f4-0b83-469c-a915-ddb1bbcfc0fa', N'https://amq-mcq.dam.kering.com/m/3ad8501890baa456/Large-624753QPN449000_F.jpg?v=4', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'19c96a7f-d44a-4956-9435-86097f9c47bb', N'f1526d67-e08d-44e0-a138-575cad4482ed', N'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-gi%C3%A0y-th%E1%BB%83-thao-lv-skate-gi%C3%A0y--BQ9U2PMI54_PM1_Back%20view.png?wid=1090&hei=1090', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'bbd43432-432b-460f-9ebf-86934565c5e0', N'caabb41b-171a-4f7b-928d-c67e05fe5b7e', N'https://amq-mcq.dam.kering.com/m/4111a651767a18c3/Large-731136DYTAB5618_F.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'a6dab4a1-bbea-499a-bf8b-87d05c83ea5b', N'3b053400-7e3b-4bc8-b9ea-db2c1d22cb04', N'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-gi%C3%A0y-l%C6%B0%E1%BB%9Di-major-gi%C3%A0y--BQEL1XGZ02_PM1_Back%20view.png?wid=1090&hei=1090', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'2111cd16-5a9e-4390-942a-897d915c935f', N'9e3eae3a-5599-47db-8bcf-728d4e5f6e8b', N'https://amq-mcq.dam.kering.com/m/8ec0bdf195f4822/Large-7438351BLCH4000_M.jpg?v=1', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'298a4794-2d2e-42fb-ab6a-8c5e0b5500cb', N'20c93f49-86ed-4b65-973a-4018393b8fc9', N'https://amq-mcq.dam.kering.com/m/419c1a357a264e93/Large-758774WHZ6U1000_R.jpg?v=1', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'46c6941e-60d1-45e2-9ef6-8e1599307a64', N'd4b648e9-6db0-42f1-bc46-aadfd61ed404', N'https://amq-mcq.dam.kering.com/m/7df2897d00469781/Large-760447Q5HXX1000_F.jpg?v=1', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'7b1eb53f-681b-440d-bd43-92748647a3a2', N'32ca16db-4339-40c9-8ae0-1710b1f1f10e', N'https://amq-mcq.dam.kering.com/m/d28bb6ad2f05aa9/Large-6762561T1A37048_E.jpg?v=3', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'b057f8a5-223c-4f15-bf04-927f547afa25', N'69874bb5-3606-49a5-9755-ccb5ec31d892', N'https://amq-mcq.dam.kering.com/m/168aeab212105d5d/Large-704901QTU634150_E.jpg?v=1', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'9ece4b78-4dae-4d22-87ca-928f7fa1b055', N'f1526d67-e08d-44e0-a138-575cad4482ed', N'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-gi%C3%A0y-th%E1%BB%83-thao-lv-skate-gi%C3%A0y--BQ9U2PMI54_PM2_Front%20view.png?wid=1090&hei=1090', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'860f27b5-8c53-40df-8217-952e582a69ef', N'4c9fa45d-14ce-46a3-8008-6fae1a5bf3e7', N'https://amq-mcq.dam.kering.com/m/61c367069276282e/Large-6564671YB419090_L.jpg?v=1', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'599ae3cd-6cf6-49c8-81ff-95d2a986075a', N'c68da26d-1dd1-4619-9e8f-2cd3b16198cf', N'https://amq-mcq.dam.kering.com/m/5a67cae77a770a6f/Large-750241QVU911000_F.jpg?v=1', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'227abc79-8ad8-4036-b356-9afc800e5713', N'1a55b8d4-6e24-4235-bc92-a31844ba0e72', N'https://amq-mcq.dam.kering.com/m/39c4e601c63c125f/Large-727824WHSWL1000_F.jpg?v=2', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'fcf93fea-7616-4db1-9dad-9b339104adee', N'9ee587b0-2e08-413c-96c4-11a89fbdc473', N'https://amq-mcq.dam.kering.com/m/58a0b02484d71ae2/Large-759112QVZ210903_R.jpg?v=1', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'433afa51-315a-4d75-aa37-9b647204a6f3', N'29d9002b-036c-4ecc-95a4-4cb7cbe51021', N'https://amq-mcq.dam.kering.com/m/13d3fd4e6ed6e5f0/Large-7554551T1A88550_A.jpg?v=2', NULL)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'bfbbfb1c-d3b9-45c1-bca6-9ce292e6bfcd', N'51e078f4-0b83-469c-a915-ddb1bbcfc0fa', N'https://amq-mcq.dam.kering.com/m/732d141cd782f2cb/Large-624753QPN449000_E.jpg?v=3', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'390e1deb-7cab-46d9-ae0a-a4543357f8b0', N'b60a6c5f-1b4e-4270-8339-49a8c1a5bf47', N'https://amq-mcq.dam.kering.com/m/3573ff9449dfd559/Large-7562511T1A67048_R.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'f779604c-9f23-4c15-933c-a99cc7806ee8', N'3b053400-7e3b-4bc8-b9ea-db2c1d22cb04', N'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-gi%C3%A0y-l%C6%B0%E1%BB%9Di-major-gi%C3%A0y--BQEL1XGZ02_PM1_Interior%20view.png?wid=1090&hei=1090', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'91227f7e-211f-4d10-89cc-aa23eeb7c85e', N'caabb41b-171a-4f7b-928d-c67e05fe5b7e', N'https://amq-mcq.dam.kering.com/m/1d3e0c7da0627cc4/Large-731136DYTAB5618_A.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'ac28c797-0d96-40d3-abed-aa9ffd91b492', N'32ca16db-4339-40c9-8ae0-1710b1f1f10e', N'https://amq-mcq.dam.kering.com/m/48a5eef33ce2d157/Large-6762561T1A37048_F.jpg?v=3', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'f93cc11e-75fe-4edf-b167-ad223b6ba4d9', N'85b490cd-22ed-4f78-9116-96421520ab8d', N'https://amq-mcq.dam.kering.com/m/5b5cbea7a1de80e4/Large-705672WHZ611081_F.jpg?v=2', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'19f73012-61a2-4257-b10f-b03fbfe2f7ad', N'91bd6944-aa29-4901-a9bd-ad1ac37b7914', N'https://amq-mcq.dam.kering.com/m/5527446ae8ab37f9/Large-752059Q1GBZ1014_F.jpg?v=2', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'9bdf9e40-afa6-4b48-8eef-bbacbe5a3661', N'c883f948-785f-4f4f-b286-cbd4e50408f9', N'https://amq-mcq.dam.kering.com/m/37bcb7302be0732f/Large-7557031BLE11000_L.jpg?v=2', NULL)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'd3642984-8422-44ec-b1fa-bc614cab1043', N'1a55b8d4-6e24-4235-bc92-a31844ba0e72', N'https://amq-mcq.dam.kering.com/m/334ab3bfc96a2496/Large-727824WHSWL1000_D.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'83310ac7-f101-4d42-8ff1-bd85fcd9b67a', N'f1526d67-e08d-44e0-a138-575cad4482ed', N'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-gi%C3%A0y-th%E1%BB%83-thao-lv-skate-gi%C3%A0y--BQ9U2PMI54_PM1_Side%20view.png?wid=1090&hei=1090', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'b18867c1-263e-4fa8-b5d9-c15b66888e7a', N'3be4d5a8-705e-4515-a679-2cb15997b274', N'https://amq-mcq.dam.kering.com/m/6d008ccad99eafbc/Large-749650QVU634100_D.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'b77a17a4-ffeb-4dc6-94e1-c238999f1c63', N'1a55b8d4-6e24-4235-bc92-a31844ba0e72', N'https://amq-mcq.dam.kering.com/m/46d79d753dfadaa6/Large-727824WHSWL1000_R.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'9413e195-9c61-4d13-8023-c42e4653837a', N'69874bb5-3606-49a5-9755-ccb5ec31d892', N'https://amq-mcq.dam.kering.com/m/5d86680e741dfc2e/Large-704901QTU634150_D.jpg?v=1', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'5962ab28-46c1-4459-807f-c4ff6216ac9f', N'65737a11-bf28-45a5-be76-6b15a12238ca', N'https://amq-mcq.dam.kering.com/m/25d4f941af419a1/Large-7093441BLEG1090_A.jpg?v=1', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'939dc81e-5ca5-4d7b-89e7-c58bbea54a06', N'0ed38557-a754-4826-a444-8dbceb77d3d4', N'https://amq-mcq.dam.kering.com/m/483645fbdea2b907/Large-731136D78EF1000_M.jpg?v=1', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'fd6fc1c5-089d-48ce-b0ae-c5a362c58fa9', N'85b490cd-22ed-4f78-9116-96421520ab8d', N'https://amq-mcq.dam.kering.com/m/54558357b05ce96b/Large-705672WHZ611081_R.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'9dc03cb1-f5b2-4b14-bda5-c5c9286b92d5', N'85b490cd-22ed-4f78-9116-96421520ab8d', N'https://amq-mcq.dam.kering.com/m/4bd3e003b425a44d/Large-705672WHZ611081_D.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'59109a9b-0b1f-409d-b6d4-c884239dcd73', N'c68da26d-1dd1-4619-9e8f-2cd3b16198cf', N'https://amq-mcq.dam.kering.com/m/577ddf37d38ea5ac/Large-750241QVU911000_R.jpg?v=1', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'04529d1a-abd2-40de-90ce-cb5bdb7d5d87', N'91bd6944-aa29-4901-a9bd-ad1ac37b7914', N'https://amq-mcq.dam.kering.com/m/7cb73f42340ff7a5/Large-752059Q1GBZ1014_R.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'1c3b1a58-cdca-4a32-adc9-cea54c58d45c', N'18fa1179-a689-4d20-88f3-4b239decbeb2', N'https://amq-mcq.dam.kering.com/m/5b213e0188ae6c7a/Large-705659W4MV29000_D.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'a37e620d-4d96-4d75-92cf-cee396a34470', N'786db983-074b-4a71-a20d-b4d3cb86dd81', N'https://amq-mcq.dam.kering.com/m/1eeb117d8cc5bea1/Large-5541281HB0T9006_E.jpg?v=3', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'cc924124-41ca-49c1-9215-cfdc39353f83', N'5df57d0c-5f00-4775-a9bf-da5079af0c94', N'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-gi%C3%A0y-l%C6%B0%E1%BB%9Di-major-gi%C3%A0y--BQEL1XGZ02_PM1_Interior%20view.png?wid=1090&hei=1090', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'aee8843c-195f-4800-b05c-d26977e5ed6c', N'a4a2f464-edef-4faf-a553-d2a74dcaf740', N'https://amq-mcq.dam.kering.com/m/4df6060fe6ab37ef/Large-749655QVU911000_E.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'efa58be5-a9a0-49f3-ac3e-da5a527f3481', N'65737a11-bf28-45a5-be76-6b15a12238ca', N'https://amq-mcq.dam.kering.com/m/5407665100cebdc0/Large-7093441BLEG1090_F.jpg?v=1', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'f9403d75-63ef-40f1-acf6-df42f30dc0b3', N'9e3eae3a-5599-47db-8bcf-728d4e5f6e8b', N'https://amq-mcq.dam.kering.com/m/2684d8328c8222eb/Large-7438351BLCH4000_A.jpg?v=1', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'93d6ffd2-4a1e-4fe5-b469-e03204524ad0', N'7aa7a7cf-cb03-4107-ab4f-6a567b98f6f7', N'https://amq-mcq.dam.kering.com/m/261d14139e062a17/Large-750237QVU911000_E.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'a44f8805-92e3-49bc-b99d-e4703aafacad', N'c883f948-785f-4f4f-b286-cbd4e50408f9', N'https://amq-mcq.dam.kering.com/m/1e11e777217eeff4/Large-7557031BLE11000_M.jpg?v=1', NULL)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'4f20a37d-c2cb-4b26-bba3-e4aa6c9dba33', N'3b053400-7e3b-4bc8-b9ea-db2c1d22cb04', N'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-gi%C3%A0y-l%C6%B0%E1%BB%9Di-major-gi%C3%A0y--BQEL1XGZ02_PM2_Front%20view.png?wid=2400&hei=2400', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'a5411eba-8706-43d1-81ca-e5344994bdb9', N'92ea0112-f3fe-4fed-b25a-3c9b542b1231', N'https://amq-mcq.dam.kering.com/m/28f838e0218ab590/Large-7430911BLGG9210_A.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'012d4b96-a405-4719-a8b2-e5815e8063a4', N'5df57d0c-5f00-4775-a9bf-da5079af0c94', N'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-gi%C3%A0y-l%C6%B0%E1%BB%9Di-major-gi%C3%A0y--BQEL1XGZ02_PM1_Back%20view.png?wid=1090&hei=1090', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'ff764d41-100c-4099-a1f8-e62471893072', N'a976c3bb-4319-4992-a8db-9bdb89118587', N'https://amq-mcq.dam.kering.com/m/da48f6bc1f5ebc4/Large-750381WIDY11081_F.jpg?v=1', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'c8bfaa4f-fb7e-40fd-9325-e6f2b25058e9', N'48d38fbd-0d8b-4667-82c8-cc98a051ecef', N'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-gi%C3%A0y-th%E1%BB%83-thao-lv-skate-gi%C3%A0y--BQ9U2PMI54_PM1_Back%20view.png?wid=1090&hei=1090', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'89dd8bc7-92b0-45dc-aa31-e7119da38338', N'91bd6944-aa29-4901-a9bd-ad1ac37b7914', N'https://amq-mcq.dam.kering.com/m/94223c0bfcdbe51/Large-752059Q1GBZ1014_D.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'ee2ae5be-9257-4788-9080-e8acde022105', N'd4b648e9-6db0-42f1-bc46-aadfd61ed404', N'https://amq-mcq.dam.kering.com/m/7365432fa29bb57/Large-760447Q5HXX1000_D.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'2c9cd7c3-26ef-49d9-a711-ed30748c3606', N'92ea0112-f3fe-4fed-b25a-3c9b542b1231', N'https://amq-mcq.dam.kering.com/m/23d38379277e79d8/Large-7430911BLGG9210_R.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'fc179ce7-f600-4c2e-9f96-edc0fb03a345', N'91bd6944-aa29-4901-a9bd-ad1ac37b7914', N'https://amq-mcq.dam.kering.com/m/3ebb480cf3d6c173/Large-752059Q1GBZ1014_E.jpg?v=2', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'aceef41b-8c9b-464f-8b55-efa96ef29a7b', N'51e078f4-0b83-469c-a915-ddb1bbcfc0fa', N'https://amq-mcq.dam.kering.com/m/2a6fb6eddde1ae8e/Large-624753QPN449000_D.jpg?v=3', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'5f760eed-ddde-4345-82e2-f2df5fcd1d72', N'93726eae-33a2-4f02-82c8-f4e02323c5f2', N'https://amq-mcq.dam.kering.com/m/7f6d8fa537319a8c/Large-7311361YBE74290_M.jpg?v=2', NULL)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'bc79d66f-8005-4890-8967-f3f5e8ec5ceb', N'c68da26d-1dd1-4619-9e8f-2cd3b16198cf', N'https://amq-mcq.dam.kering.com/m/d5224065ba67669/Large-750241QVU911000_D.jpg?v=1', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'595adc09-18e9-41e9-b86a-f55f1c93d011', N'29d9002b-036c-4ecc-95a4-4cb7cbe51021', N'https://amq-mcq.dam.kering.com/m/6d8d804ed94d2ecd/Large-7554551T1A88550_M.jpg?v=1', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'b4532724-cb91-4426-b334-f66889e40da6', N'3b053400-7e3b-4bc8-b9ea-db2c1d22cb04', N'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-gi%C3%A0y-l%C6%B0%E1%BB%9Di-major-gi%C3%A0y--BQEL1XGZ02_PM1_Side%20view.png?wid=1090&hei=1090', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'37390196-f3f1-4d9a-89ee-f71147a9019f', N'81515973-84b5-472f-be8f-3766917f4c84', N'https://amq-mcq.dam.kering.com/m/483c397350823658/Large-604253WHZ801000_D.jpg?v=1', 2)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'3096c48e-cf3b-4fcd-8a9f-f8ad4a8cdc0d', N'32ca16db-4339-40c9-8ae0-1710b1f1f10e', N'https://amq-mcq.dam.kering.com/m/24aae13819721341/Large-6762561T1A37048_A.jpg?v=4', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'0ce11787-4cc0-401c-9d26-f8e4b191fa00', N'9e1191be-2935-4a2a-b10d-8b94e8ab3461', N'https://amq-mcq.dam.kering.com/m/e73d7868410ebe8/Large-759111QVZ210903_F.jpg?v=1', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'83028527-5517-4dbb-8b7e-fda536824e9d', N'5df57d0c-5f00-4775-a9bf-da5079af0c94', N'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-gi%C3%A0y-l%C6%B0%E1%BB%9Di-major-gi%C3%A0y--BQEL1XGZ02_PM2_Front%20view.png?wid=2400&hei=2400', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'e7020cce-88b8-4d72-a791-fdd19cd4c1f5', N'caabb41b-171a-4f7b-928d-c67e05fe5b7e', N'https://amq-mcq.dam.kering.com/m/33cc86c7c43438b5/Large-731136DYTAB5618_L.jpg?v=1', 1)
+GO
+INSERT [dbo].[Image] ([Id], [IdProduct], [Img], [UsedStatus]) VALUES (N'42946df0-fd77-4f01-b206-fe07d06b78e9', N'32ca16db-4339-40c9-8ae0-1710b1f1f10e', N'https://amq-mcq.dam.kering.com/m/702c9fc2efb88faf/Large-6762561T1A37048_R.jpg?v=3', 2)
+GO
+INSERT [dbo].[Orders] ([Id], [IdUser], [IdCart], [IdProductDetail], [IdDiscount], [Description], [Number], [PriceShip], [TotalPrice], [CreateBy], [CreateDate], [ModifierBy], [ModifierDate], [UsedStatus]) VALUES (N'1ed30113-8b47-4073-9d27-1b9a11471df2', N'13e2096d-a2e1-4301-884f-613d5598bfba', NULL, N'6a0dac54-6d5f-4bb7-ae3b-62df40afbef0', NULL, N'Test Orders', 3, 31655, NULL, N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-19' AS Date), NULL, CAST(N'2023-09-19' AS Date), 3)
+GO
+INSERT [dbo].[Orders] ([Id], [IdUser], [IdCart], [IdProductDetail], [IdDiscount], [Description], [Number], [PriceShip], [TotalPrice], [CreateBy], [CreateDate], [ModifierBy], [ModifierDate], [UsedStatus]) VALUES (N'01855dcd-8876-46e6-a59d-1cd7c7aa7a0e', N'13e2096d-a2e1-4301-884f-613d5598bfba', NULL, N'3df2ee91-f89f-425b-af80-8a1667a8d920', NULL, N'Đây là mua test', 4, 85896, 89896, N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-19' AS Date), NULL, CAST(N'2023-09-19' AS Date), 4)
+GO
+INSERT [dbo].[Orders] ([Id], [IdUser], [IdCart], [IdProductDetail], [IdDiscount], [Description], [Number], [PriceShip], [TotalPrice], [CreateBy], [CreateDate], [ModifierBy], [ModifierDate], [UsedStatus]) VALUES (N'c5fe6534-690e-414a-acd3-267d7e7b7584', N'13e2096d-a2e1-4301-884f-613d5598bfba', NULL, N'8d5c6076-84ac-47ec-b39f-3dcb4730ea2c', NULL, N'string', 10, 20.2542719073976, 25920.254271907397, N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-21' AS Date), NULL, CAST(N'2023-09-21' AS Date), 3)
+GO
+INSERT [dbo].[Orders] ([Id], [IdUser], [IdCart], [IdProductDetail], [IdDiscount], [Description], [Number], [PriceShip], [TotalPrice], [CreateBy], [CreateDate], [ModifierBy], [ModifierDate], [UsedStatus]) VALUES (N'd425b816-1541-44b1-ab1c-b0f1fabec191', N'13e2096d-a2e1-4301-884f-613d5598bfba', NULL, N'62db07db-97fc-435f-a597-7d0e723e0b05', NULL, N'Test Orders', 3, 17095, NULL, N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-19' AS Date), NULL, CAST(N'2023-09-19' AS Date), 5)
+GO
+INSERT [dbo].[Orders] ([Id], [IdUser], [IdCart], [IdProductDetail], [IdDiscount], [Description], [Number], [PriceShip], [TotalPrice], [CreateBy], [CreateDate], [ModifierBy], [ModifierDate], [UsedStatus]) VALUES (N'2ed2a0ab-7cf2-47ca-87a4-b7edb60e31c6', N'13e2096d-a2e1-4301-884f-613d5598bfba', NULL, N'6a0dac54-6d5f-4bb7-ae3b-62df40afbef0', NULL, N'Test Orders', 3, 35943, 49713, N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-19' AS Date), NULL, CAST(N'2023-09-19' AS Date), 3)
+GO
+INSERT [dbo].[Orders] ([Id], [IdUser], [IdCart], [IdProductDetail], [IdDiscount], [Description], [Number], [PriceShip], [TotalPrice], [CreateBy], [CreateDate], [ModifierBy], [ModifierDate], [UsedStatus]) VALUES (N'aeb1b04d-c0a7-42f8-b86d-dfe4a36ea6d2', N'13e2096d-a2e1-4301-884f-613d5598bfba', NULL, N'c89738bb-3fba-4e50-a2fc-05fc77377279', NULL, N'string', 2, 32804.944346762626, 39584.944346762626, N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-21' AS Date), NULL, CAST(N'2023-09-21' AS Date), 6)
+GO
+INSERT [dbo].[Orders] ([Id], [IdUser], [IdCart], [IdProductDetail], [IdDiscount], [Description], [Number], [PriceShip], [TotalPrice], [CreateBy], [CreateDate], [ModifierBy], [ModifierDate], [UsedStatus]) VALUES (N'048e379f-041f-48df-919f-e49bc5ed6cd6', N'13e2096d-a2e1-4301-884f-613d5598bfba', NULL, N'f8e6ded5-3f7e-4590-b53a-041d12276722', NULL, N'Test Orders', 3, 95539, NULL, N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-19' AS Date), NULL, CAST(N'2023-09-19' AS Date), 5)
+GO
+INSERT [dbo].[Orders] ([Id], [IdUser], [IdCart], [IdProductDetail], [IdDiscount], [Description], [Number], [PriceShip], [TotalPrice], [CreateBy], [CreateDate], [ModifierBy], [ModifierDate], [UsedStatus]) VALUES (N'e8e4e55b-61bd-49c9-a7d3-f7aefb8c27ee', N'13e2096d-a2e1-4301-884f-613d5598bfba', NULL, N'bd8c1d41-1dd5-4168-89bc-cc4686e1c33d', NULL, N'Test Orders', 6, 38937, NULL, N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-19' AS Date), NULL, CAST(N'2023-09-19' AS Date), 4)
+GO
+INSERT [dbo].[Producer] ([Id], [Name], [Country], [Address], [Description], [UsedStated], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate]) VALUES (N'968f0c06-bf16-479f-b59f-00b1dd2f9d14', N'Test1', N'VN1', N'VN1', N'string', 0, N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-17' AS Date), NULL, CAST(N'2023-09-17' AS Date))
+GO
+INSERT [dbo].[Producer] ([Id], [Name], [Country], [Address], [Description], [UsedStated], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate]) VALUES (N'43c20e1f-2c4b-47ff-bab4-14f7142b3030', N'Nguyễn Hiếu', NULL, N'Yên Tân - Ý Yên - Nam Định', NULL, 0, N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-22' AS Date), NULL, NULL)
+GO
+INSERT [dbo].[Producer] ([Id], [Name], [Country], [Address], [Description], [UsedStated], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate]) VALUES (N'4071ef63-9f29-4666-82ba-288d64912264', N'Test OK', N'VN', N'VN', N'string', 0, N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-17' AS Date), N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-17' AS Date))
+GO
+INSERT [dbo].[Producer] ([Id], [Name], [Country], [Address], [Description], [UsedStated], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate]) VALUES (N'dc9505a2-8a62-43a0-aa0e-28eadd73c972', N'Nguyễn Hiếu', NULL, N'Yên Tân ý Yên nam định', NULL, 0, N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-22' AS Date), NULL, NULL)
+GO
+INSERT [dbo].[Producer] ([Id], [Name], [Country], [Address], [Description], [UsedStated], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate]) VALUES (N'62f59f80-12ad-4b67-8529-40ddb034c491', N'Test2', N'VN2', N'VN2', N'string', 0, N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-17' AS Date), NULL, CAST(N'2023-09-17' AS Date))
+GO
+INSERT [dbo].[Producer] ([Id], [Name], [Country], [Address], [Description], [UsedStated], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate]) VALUES (N'0f446d8d-acb6-4ac4-923c-783123b275f3', N'LV', N'Franch', N'Paris, Pháp', N'Công ty Louis Vuitton (được biết đến nhiều hơn dưới tên gọi đơn giản là Louis Vuitton) là một công ty và nhãn hiệu thời trang xa xỉ của Pháp, có trụ sở tại Paris, Pháp. Đây là một ban của công ty cổ phần Pháp LVMH Louis Vuitton Moët Hennessy S.A. Công ty được đặt tên theo tên người sáng lập ra hãng là Louis Vuitton (4 tháng 8 năm 1821-27 tháng 2 năm 1892), người đã thiết kế và sản xuất hành lý như một Malletier trong nửa sau của thế kỷ 19.', 0, N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-14' AS Date), NULL, CAST(N'2023-09-14' AS Date))
+GO
+INSERT [dbo].[Producer] ([Id], [Name], [Country], [Address], [Description], [UsedStated], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate]) VALUES (N'2291a345-2198-489c-aa4a-8f9aca1f95de', N'Nguyễn Hiếu', NULL, N'Yên Tân ý Yên nam định', NULL, 0, N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-22' AS Date), NULL, NULL)
+GO
+INSERT [dbo].[Producer] ([Id], [Name], [Country], [Address], [Description], [UsedStated], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate]) VALUES (N'906d7676-c264-4a16-b048-9e956f1ec974', N'Nguyễn Hiếu', NULL, N'Yên Tân - Ý Yên - Nam Định', NULL, 0, N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-22' AS Date), NULL, NULL)
+GO
+INSERT [dbo].[Producer] ([Id], [Name], [Country], [Address], [Description], [UsedStated], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate]) VALUES (N'fc1b6979-01cd-4bd5-bf4d-a4dee75fa41c', N'Test4', N'VN4', N'VN4', N'string', 0, N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-17' AS Date), NULL, CAST(N'2023-09-17' AS Date))
+GO
+INSERT [dbo].[Producer] ([Id], [Name], [Country], [Address], [Description], [UsedStated], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate]) VALUES (N'c00553bc-ae03-45a1-9b9c-bf88c16a52e4', N'Nguyễn Hiếu', NULL, N'Yên Tân ý Yên nam định', NULL, 0, N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-23' AS Date), NULL, NULL)
+GO
+INSERT [dbo].[Producer] ([Id], [Name], [Country], [Address], [Description], [UsedStated], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate]) VALUES (N'e36cdbb6-5842-4913-a001-dbd43499066b', N'Test3', N'VN3', N'VN3', N'string', 0, N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-17' AS Date), NULL, CAST(N'2023-09-17' AS Date))
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'9ee587b0-2e08-413c-96c4-11a89fbdc473', N'Patchwork Workwear Jeans', N'0f446d8d-acb6-4ac4-923c-783123b275f3', N'03105da6-15fa-4e1c-81c1-6e2393d058d4', N'100% Cotton', 1380, N'Patchwork workwear jeans in indigo and black denim featuring two side pockets and two patch pockets on the back. The jeans are finished with a zip and button fastening.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), NULL, CAST(N'2023-09-20' AS Date), 0, N'03f0abcc-f8d5-42ce-b379-083a3b900efa', NULL)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'32ca16db-4339-40c9-8ae0-1710b1f1f10e', N'Knuckle Clutch in Gold', N'0f446d8d-acb6-4ac4-923c-783123b275f3', N'79f0abcc-f8d5-42ce-b379-083a3b900efa', N'100% Lambskin', 9590, N'Knuckle Clutch featuring an all-over, gold-tone bugle embroidery and a handle adorned with Swarovski-encrusted rings. The clutch can be worn either hand-held or across the body using its chain strap.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), NULL, CAST(N'2023-09-20' AS Date), 0, N'3fa85f64-5717-4562-b3fc-2c963f66afa6', NULL)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'3be4d5a8-705e-4515-a679-2cb15997b274', N'Large Lapel', N'0f446d8d-acb6-4ac4-923c-783123b275f3', N'3710e807-4cc9-41ec-a10a-f8b2d03db309', N'75% Wool, 25% Mohair', 3670, N'Double-breasted large-lapel jacket tailored from navy blue summer kid wool mohair. The jacket features two jetted pockets and is finished with a concealed fastening.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), NULL, CAST(N'2023-09-20' AS Date), 0, N'03f0abcc-f8d5-42ce-b379-083a3b900efa', NULL)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'c68da26d-1dd1-4619-9e8f-2cd3b16198cf', N'Embroidered Harness', N'0f446d8d-acb6-4ac4-923c-783123b275f3', N'3710e807-4cc9-41ec-a10a-f8b2d03db309', N'100% Wool', 4590, N'Single-breasted jacket in black grain de poudre featuring a harness with tonal Collage embroidery. The jacket is detailed with peak lapels and side jetted pockets. FInished with a single button fastening.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), NULL, CAST(N'2023-09-20' AS Date), 0, N'03f0abcc-f8d5-42ce-b379-083a3b900efa', NULL)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'81515973-84b5-472f-be8f-3766917f4c84', N'Tread Slick Boot 2', N'0f446d8d-acb6-4ac4-923c-783123b275f3', N'5e03c48a-e2aa-4d4e-b7a8-7d2ff6d2031a', N'100% Calfskin', 990, N'Black shiny calfskin leather lace-up boot with silver-finished metal hardware, contrast stitching and a thick oversized rubber tread sole. Boot silhouette with a round toe shape. Finished with an Alexander McQueen signature on the tongue.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), NULL, CAST(N'2023-09-20' AS Date), 0, N'3fa85f64-5717-4562-b3fc-2c963f66afa6', NULL)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'92ea0112-f3fe-4fed-b25a-3c9b542b1231', N'The Peak Bag Small in Soft Ivory', N'0f446d8d-acb6-4ac4-923c-783123b275f3', N'79f0abcc-f8d5-42ce-b379-083a3b900efa', N'100% Calf Leather', 3200, N'Inspired by the sharp and structured shoulders of the tailoring silhouettes, this small Peak bag is handcrafted from soft ivory calfskin leather with a curve-shaped magnetic frame, juxtaposed with a soft body. The bag can be worn over the shoulder using its antique silver-finished chain strap or hand-held by the four-ring handle.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), NULL, CAST(N'2023-09-20' AS Date), 0, N'3fa85f64-5717-4562-b3fc-2c963f66afa6', NULL)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'20c93f49-86ed-4b65-973a-4018393b8fc9', N'Tread Slick Zip Boot', N'0f446d8d-acb6-4ac4-923c-783123b275f3', N'5e03c48a-e2aa-4d4e-b7a8-7d2ff6d2031a', N'100% Calf Leather', 1.19, N'Presented in black calf leather, this Tread Slick boot features an exposed, biker-inspired silver-tone zip on the upper. The boot is detailed with a textured rubber wrap and a tonal Alexander McQueen signature. Finished with a lightweight oversized rubber tread sole.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), NULL, CAST(N'2023-09-20' AS Date), 0, N'03f0abcc-f8d5-42ce-b379-083a3b900efa', NULL)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'b60a6c5f-1b4e-4270-8339-49a8c1a5bf47', N'Bosch Knuckle Clutch', N'0f446d8d-acb6-4ac4-923c-783123b275f3', N'79f0abcc-f8d5-42ce-b379-083a3b900efa', N'100% Lambskin', 3200, N'Clear crystal-embellished Knuckle clutch featuring a handle adorned with Swarovski-encrusted rings. The knuckle design featuring hybrid creatures is inspired by Hieronymus Bosch''s medieval artwork. The clutch can be worn either hand-held or across the body using its chain strap', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), NULL, CAST(N'2023-09-20' AS Date), 0, N'3fa85f64-5717-4562-b3fc-2c963f66afa6', NULL)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'18fa1179-a689-4d20-88f3-4b239decbeb2', N'Tread Slick Boot', N'0f446d8d-acb6-4ac4-923c-783123b275f3', N'5e03c48a-e2aa-4d4e-b7a8-7d2ff6d2031a', N'100% Cotton', 850, N'White canvas lace-up boot with a thick oversized rubber tread sole. The boot is detailed with a textured rubber wrap and tonal Alexander McQueen signature, finished with a signature ribbon on the back of boot. Round toe shape boot silhouette details rubber toe cap.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), NULL, CAST(N'2023-09-20' AS Date), 0, N'03f0abcc-f8d5-42ce-b379-083a3b900efa', NULL)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'29d9002b-036c-4ecc-95a4-4cb7cbe51021', N'The Jewelled in Red', N'0f446d8d-acb6-4ac4-923c-783123b275f3', N'79f0abcc-f8d5-42ce-b379-083a3b900efa', N'100% Calf Leather', 4590, N'Black calfskin leather Jewelled Hobo featuring an all-over crystal and stud embellishment and an antique silver-finished handle adorned with Swarovski-encrusted rings. The unique silhouette of the Jewelled Hobo is inspired by the faceted stone that sits on the Knuckle, and features leather panels that are cut and re-assembled together. This bag can be worn either hand-held or over the shoulder or across the body with its detachable chain.', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-16' AS Date), NULL, CAST(N'2023-09-16' AS Date), 0, N'03f0abcc-f8d5-42ce-b379-083a3b900efa', N'cc057caf-9e72-428d-95d7-3470b8d92742')
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'f1526d67-e08d-44e0-a138-575cad4482ed', N'Giày Thể Thao LV Skate', N'dc9505a2-8a62-43a0-aa0e-28eadd73c972', N'5e03c48a-e2aa-4d4e-b7a8-7d2ff6d2031a', N'Hỗn hợp chất liệu vải lưới kỹ thuật, da bê trơn và mặt dưới của da bê', 34500000, N'Lấy cảm hứng từ những đôi giày trượt băng ở thập niên 90, giày thể thao LV Skate mùa này được biến tấu mới lạ với sự kết hợp hài hòa của nhiều chất liệu. Thiết kế sở hữu lớp lót bằng vải kỹ thuật in hoa văn Monogram biểu tượng và lớp đệm giúp mang đến cảm giác thoải mái tối ưu. Các bông hoa Monogram trên đế ngoài và ở mặt bên hoàn thiện mẫu giày 2 màu thời thượng.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-22' AS Date), NULL, CAST(N'2023-09-22' AS Date), 0, N'3fa85f64-5717-4562-b3fc-2c963f66afa6', NULL)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'77e91cbd-6575-42c1-a740-648740feeb1b', N'Orchid Bomber Jacket', N'0f446d8d-acb6-4ac4-923c-783123b275f3', N'03105da6-15fa-4e1c-81c1-6e2393d058d4', N'100% Polyamid', 3450, N'MA-1 bomber jacket in quilted khaki nylon featuring an engineered Orchid print. The jacket is detailed with side flap pockets and is finished with a front zip fastening.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), NULL, CAST(N'2023-09-20' AS Date), 0, N'03f0abcc-f8d5-42ce-b379-083a3b900efa', NULL)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'7aa7a7cf-cb03-4107-ab4f-6a567b98f6f7', N'Embroidered Lapel', N'0f446d8d-acb6-4ac4-923c-783123b275f3', N'3710e807-4cc9-41ec-a10a-f8b2d03db309', N'100% Wool', 3390, N'Single-breasted tailored jacket in black wool grain de poudre, featuring peak lapels with tonal jet Collage embroidery. The jacket is detailed with a slit pocket on the chest and two jetted pockets at the sides. Finished with a single button fastening.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), NULL, CAST(N'2023-09-20' AS Date), 0, N'03f0abcc-f8d5-42ce-b379-083a3b900efa', NULL)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'65737a11-bf28-45a5-be76-6b15a12238ca', N'The Bow', N'0f446d8d-acb6-4ac4-923c-783123b275f3', N'79f0abcc-f8d5-42ce-b379-083a3b900efa', N'100% Calf leather', 2590, N'The Bow in soft ivory and black smooth calf leather. This bag can be worn either hand-held or over the shoulder. Finished with a silver Alexander McQueen signature.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), NULL, CAST(N'2023-09-20' AS Date), 0, N'3fa85f64-5717-4562-b3fc-2c963f66afa6', NULL)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'4c9fa45d-14ce-46a3-8008-6fae1a5bf3e7', N'The Jewelled in Black', N'0f446d8d-acb6-4ac4-923c-783123b275f3', N'79f0abcc-f8d5-42ce-b379-083a3b900efa', N'100% Calf Leather', 4590, N'Black calfskin leather Jewelled Hobo featuring an all-over crystal and stud embellishment and an antique silver-finished handle adorned with Swarovski-encrusted rings. The unique silhouette of the Jewelled Hobo is inspired by the faceted stone that sits on the Knuckle, and features leather panels that are cut and re-assembled together. This bag can be worn either hand-held or over the shoulder or across the body with its detachable chain.', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-16' AS Date), NULL, CAST(N'2023-09-16' AS Date), 0, N'03f0abcc-f8d5-42ce-b379-083a3b900efa', N'cc057caf-9e72-428d-95d7-3470b8d92742')
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'9e3eae3a-5599-47db-8bcf-728d4e5f6e8b', N'Mini Jewelled Satchel', N'0f446d8d-acb6-4ac4-923c-783123b275f3', N'79f0abcc-f8d5-42ce-b379-083a3b900efa', N'100% Calf Leather', 2890, N'Blue calf leather Mini Jewelled Satchel featuring a dégradé blue oversize chain strap. The bag can be worn in multiple ways: carry it in your hand using the ring handle or by doubling up the strap. Alternatively, wear it over the shoulder or across the body using the chain strap.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), NULL, CAST(N'2023-09-20' AS Date), 0, N'3fa85f64-5717-4562-b3fc-2c963f66afa6', NULL)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'9e1191be-2935-4a2a-b10d-8b94e8ab3461', N'Patchwork Denim Jacket', N'0f446d8d-acb6-4ac4-923c-783123b275f3', N'03105da6-15fa-4e1c-81c1-6e2393d058d4', N'100% Cotton', 1850, N'Patchwork jacket in indigo and black denim featuring a point collar and mismatched chest pockets. The jacket is finished with a two-way zip fastening.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), NULL, CAST(N'2023-09-20' AS Date), 0, N'03f0abcc-f8d5-42ce-b379-083a3b900efa', NULL)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'0ed38557-a754-4826-a444-8dbceb77d3d4', N'Máy hút bụi', N'0f446d8d-acb6-4ac4-923c-783123b275f3', N'79f0abcc-f8d5-42ce-b379-083a3b900efa', N'nhựa', 1000, N'string', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-19' AS Date), NULL, CAST(N'2023-09-19' AS Date), 0, N'03f0abcc-f8d5-42ce-b379-083a3b900efa', N'cc057caf-9e72-428d-95d7-3470b8d92742')
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'85b490cd-22ed-4f78-9116-96421520ab8d', N'Tread Slick Chelsea Boot', N'0f446d8d-acb6-4ac4-923c-783123b275f3', N'5e03c48a-e2aa-4d4e-b7a8-7d2ff6d2031a', N'100% Calf Leather', 990, N'Black calf leather Chelsea boot with an oversized rubber tread sole. The boot is detailed with a textured rubber wrap and tonal Alexander McQueen signature, finished with a signature ribbon on the back of boot. Round-toe boot silhouette with rubber toe cap detail.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), NULL, CAST(N'2023-09-20' AS Date), 0, N'03f0abcc-f8d5-42ce-b379-083a3b900efa', NULL)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'a976c3bb-4319-4992-a8db-9bdb89118587', N'Punk Triple Strap Boot', N'0f446d8d-acb6-4ac4-923c-783123b275f3', N'5e03c48a-e2aa-4d4e-b7a8-7d2ff6d2031a', N'100% Calf Leather', 1795, N'Black leather Punk boot featuring three buckled straps and silver-tone metal toe cap with pointed toe silhouette.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), NULL, CAST(N'2023-09-20' AS Date), 0, N'03f0abcc-f8d5-42ce-b379-083a3b900efa', NULL)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'1a55b8d4-6e24-4235-bc92-a31844ba0e72', N'Punk Worker Boot', N'0f446d8d-acb6-4ac4-923c-783123b275f3', N'5e03c48a-e2aa-4d4e-b7a8-7d2ff6d2031a', N'100% Calf Leather', 1.25, N'Black smooth leather lace-up boot featuring a pieced and patched design with grained leather brogue detailing. Finished with a toe bumper and a chunky rubber sole.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), NULL, CAST(N'2023-09-20' AS Date), 0, N'03f0abcc-f8d5-42ce-b379-083a3b900efa', NULL)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'd4b648e9-6db0-42f1-bc46-aadfd61ed404', N'Hybrid Bomber Jacket', N'0f446d8d-acb6-4ac4-923c-783123b275f3', N'03105da6-15fa-4e1c-81c1-6e2393d058d4', N'100% Calf Leather', 3890, N'Hybrid jacket featuring a black cashmere blend body and tonal leather sleeves and pocket flaps. The jacket is finished with a leather half Seal logo applique on the back.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), NULL, CAST(N'2023-09-20' AS Date), 0, N'03f0abcc-f8d5-42ce-b379-083a3b900efa', NULL)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'91bd6944-aa29-4901-a9bd-ad1ac37b7914', N'Solarised Flower Jumper', N'c00553bc-ae03-45a1-9b9c-bf88c16a52e4', N'03105da6-15fa-4e1c-81c1-6e2393d058d4', N'100% Cotton', 1270, N'Black, red, ivory and blue cotton jumper detailed with an engineered Solarised Flower print. The jumper features a crew neck and ribbed trims.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-22' AS Date), NULL, CAST(N'2023-09-22' AS Date), 0, N'3fa85f64-5717-4562-b3fc-2c963f66afa6', NULL)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'786db983-074b-4a71-a20d-b4d3cb86dd81', N'Jewelled Satchel', N'0f446d8d-acb6-4ac4-923c-783123b275f3', N'79f0abcc-f8d5-42ce-b379-083a3b900efa', N'100% Calf leather', 2690, N'Shiny deep ivory embossed croc calfskin leather Jewelled Satchel. This bag can be worn in multiple ways: carry it in your hand using the ring handle or by doubling up the strap. Alternatively, wear over the shoulder or across the body using the leather and chain strap.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), NULL, CAST(N'2023-09-20' AS Date), 0, N'3fa85f64-5717-4562-b3fc-2c963f66afa6', NULL)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'caabb41b-171a-4f7b-928d-c67e05fe5b7e', N'The Jewelled Hobo Bag', N'0f446d8d-acb6-4ac4-923c-783123b275f3', N'79f0abcc-f8d5-42ce-b379-083a3b900efa', N'100% Calf leather', 2590, N'Antique pink smooth calfskin leather Jewelled Hobo bag featuring an antique silver-finished handle adorned with Swarovski-encrusted rings. The unique silhouette of the Jewelled Hobo bag is inspired by the faceted stone that sits on the Knuckle, and features leather panels that are cut and re-assembled together. This bag can be worn either hand-held or over the shoulder or across the body with its detachable chain.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), NULL, CAST(N'2023-09-20' AS Date), 0, N'3fa85f64-5717-4562-b3fc-2c963f66afa6', NULL)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'c883f948-785f-4f4f-b286-cbd4e50408f9', N'The Jewelled in White test thử Update', N'0f446d8d-acb6-4ac4-923c-783123b275f3', N'79f0abcc-f8d5-42ce-b379-083a3b900efa', N'100% Calf Leather', 4590, N'Black calfskin leather Jewelled Hobo featuring an all-over crystal and stud embellishment and an antique silver-finished handle adorned with Swarovski-encrusted rings. The unique silhouette of the Jewelled Hobo is inspired by the faceted stone that sits on the Knuckle, and features leather panels that are cut and re-assembled together. This bag can be worn either hand-held or over the shoulder or across the body with its detachable chain.', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-17' AS Date), N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-17' AS Date), 0, N'03f0abcc-f8d5-42ce-b379-083a3b900efa', N'cc057caf-9e72-428d-95d7-3470b8d92742')
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'48d38fbd-0d8b-4667-82c8-cc98a051ecef', N'Giày Thể Thao LV Skate', N'906d7676-c264-4a16-b048-9e956f1ec974', N'5e03c48a-e2aa-4d4e-b7a8-7d2ff6d2031a', N'Hỗn hợp chất liệu vải lưới kỹ thuật, da bê trơn và mặt dưới của da bê', 34500000, N'Lấy cảm hứng từ những đôi giày trượt băng ở thập niên 90, giày thể thao LV Skate mùa này được biến tấu mới lạ với sự kết hợp hài hòa của nhiều chất liệu. Thiết kế sở hữu lớp lót bằng vải kỹ thuật in hoa văn Monogram biểu tượng và lớp đệm giúp mang đến cảm giác thoải mái tối ưu. Các bông hoa Monogram trên đế ngoài và ở mặt bên hoàn thiện mẫu giày 2 màu thời thượng.', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-22' AS Date), NULL, CAST(N'2023-09-22' AS Date), 0, N'3fa85f64-5717-4562-b3fc-2c963f66afa6', N'cc057caf-9e72-428d-95d7-3470b8d92742')
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'69874bb5-3606-49a5-9755-ccb5ec31d892', N'Wool Mohair', N'0f446d8d-acb6-4ac4-923c-783123b275f3', N'3710e807-4cc9-41ec-a10a-f8b2d03db309', N'75% Wool, 25% Mohair', 2790, N'Single-breasted tailored jacket in indigo wool and mohair blend. The jacket has wide peak lapels and neat shoulders. Features a slit pocket on the chest and two flap pockets at the sides. Finished with a one-button fastening.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), NULL, CAST(N'2023-09-20' AS Date), 0, N'03f0abcc-f8d5-42ce-b379-083a3b900efa', NULL)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'a4a2f464-edef-4faf-a553-d2a74dcaf740', N'Single-breasted', N'0f446d8d-acb6-4ac4-923c-783123b275f3', N'3710e807-4cc9-41ec-a10a-f8b2d03db309', N'100% Wool', 3670, N'Single-breasted tailored jacket in black grain de poudre featuring a trompe-l''œil construction with wide notched lapels. The jacket is detailed with a slit pocket on the chest and two jetted pockets at the sides. Finished with a single button fastening.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), NULL, CAST(N'2023-09-20' AS Date), 0, N'03f0abcc-f8d5-42ce-b379-083a3b900efa', NULL)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'5df57d0c-5f00-4775-a9bf-da5079af0c94', N'Giày Lười Major', N'2291a345-2198-489c-aa4a-8f9aca1f95de', N'5e03c48a-e2aa-4d4e-b7a8-7d2ff6d2031a', N'Hỗn hợp chất liệu vải lưới kỹ thuật, da bê trơn và mặt dưới của da bê', 34500000, N'Phiên bản này của giày lười Major được may từ da bê bóng với phần thân trước được khâu thủ công và dập nổi họa tiết Damier trứ danh. Đế ngoài to bản nhưng nhẹ tênh mang đến nét biến tấu độc đáo cho mẫu giày cổ điển vốn là sản phẩm chủ đạo của bộ sưu tập giày Louis Vuitton. Logo LV nhấn nhá trên phần thân trên giúp hoàn thiện thiết kế với dấu ấn đặc trưng của nhà mốt.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-22' AS Date), NULL, CAST(N'2023-09-22' AS Date), 0, N'3fa85f64-5717-4562-b3fc-2c963f66afa6', NULL)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'3b053400-7e3b-4bc8-b9ea-db2c1d22cb04', N'Giày Lười Major', N'43c20e1f-2c4b-47ff-bab4-14f7142b3030', N'5e03c48a-e2aa-4d4e-b7a8-7d2ff6d2031a', N'Hỗn hợp chất liệu vải lưới kỹ thuật, da bê trơn và mặt dưới của da bê', 34500000, N'Phiên bản này của giày lười Major được may từ da bê bóng với phần thân trước được khâu thủ công và dập nổi họa tiết Damier trứ danh. Đế ngoài to bản nhưng nhẹ tênh mang đến nét biến tấu độc đáo cho mẫu giày cổ điển vốn là sản phẩm chủ đạo của bộ sưu tập giày Louis Vuitton. Logo LV nhấn nhá trên phần thân trên giúp hoàn thiện thiết kế với dấu ấn đặc trưng của nhà mốt.', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-22' AS Date), NULL, CAST(N'2023-09-22' AS Date), 0, N'3fa85f64-5717-4562-b3fc-2c963f66afa6', N'cc057caf-9e72-428d-95d7-3470b8d92742')
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'51e078f4-0b83-469c-a915-ddb1bbcfc0fa', N'Harness Shirt', N'0f446d8d-acb6-4ac4-923c-783123b275f3', N'03105da6-15fa-4e1c-81c1-6e2393d058d4', N'78% Cotton, 16% Polyamide, 6% Elastane', 630, N'White cotton poplin harness shirt detailed with a metal buckle. Finished with a buttoned front and a double button cuff.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), NULL, CAST(N'2023-09-20' AS Date), 0, N'03f0abcc-f8d5-42ce-b379-083a3b900efa', NULL)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [IdProducer], [IdProductType], [Material], [Price], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [UsedStatus], [IdDiscount], [IdShop]) VALUES (N'93726eae-33a2-4f02-82c8-f4e02323c5f2', N'The Jewelled in Yellow', N'0f446d8d-acb6-4ac4-923c-783123b275f3', N'79f0abcc-f8d5-42ce-b379-083a3b900efa', N'100% Calf Leather', 4590, N'Black calfskin leather Jewelled Hobo featuring an all-over crystal and stud embellishment and an antique silver-finished handle adorned with Swarovski-encrusted rings. The unique silhouette of the Jewelled Hobo is inspired by the faceted stone that sits on the Knuckle, and features leather panels that are cut and re-assembled together. This bag can be worn either hand-held or over the shoulder or across the body with its detachable chain.', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-16' AS Date), NULL, CAST(N'2023-09-16' AS Date), 0, N'03f0abcc-f8d5-42ce-b379-083a3b900efa', N'cc057caf-9e72-428d-95d7-3470b8d92742')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'f8e6ded5-3f7e-4590-b53a-041d12276722', N'c883f948-785f-4f4f-b286-cbd4e50408f9', 20, N'Test Thử Update', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-17' AS Date), N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-17' AS Date), N'White', N'20 x 12 x 8 cm / 7.8 x 4.7 x 3.1 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'f2787718-0efe-47ab-91d9-058873175487', N'4c9fa45d-14ce-46a3-8008-6fae1a5bf3e7', 35, N'string', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-16' AS Date), N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-16' AS Date), N'Yellow', N'20 x 12 x 8 cm / 7.8 x 4.7 x 3.1 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'c89738bb-3fba-4e50-a2fc-05fc77377279', N'7aa7a7cf-cb03-4107-ab4f-6a567b98f6f7', 100, N'Best Saler', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'White', N'Peak lapels with Collage embroidery, Single button fastening, Made with certified wool yarn')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'82c84af4-9985-4491-808b-0926842b61e6', N'3b053400-7e3b-4bc8-b9ea-db2c1d22cb04', 100, N'string', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-22' AS Date), N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-22' AS Date), N'Xám', N'60')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'5c6405ab-6ce6-41e6-91a5-09a656b09d03', N'3b053400-7e3b-4bc8-b9ea-db2c1d22cb04', 40, N'string', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-22' AS Date), N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-22' AS Date), N'Đen/xanh denim', N'60')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'3b45e33b-4fbc-4a05-ac20-0ab0e7a2912a', N'a4a2f464-edef-4faf-a553-d2a74dcaf740', 60, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Black', N'Notched lapels, Single button fastening, Made with certified wool yarn')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'97d65dd7-dc28-40cc-9262-0acb7389e82c', N'1a55b8d4-6e24-4235-bc92-a31844ba0e72', 90, N'Best Saler', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'White', N'The style fits true to size')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'b943c22c-b29c-45bf-88d1-0b18c0e8272f', N'7aa7a7cf-cb03-4107-ab4f-6a567b98f6f7', 100, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'indigo', N'Peak lapels with Collage embroidery, Single button fastening, Made with certified wool yarn')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'349404ba-4201-49a1-bae7-0bbc6b40c19b', N'51e078f4-0b83-469c-a915-ddb1bbcfc0fa', 30, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Black', N'Zip and button fastening, Regular fit, Made with organic cotton yarn')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'ed11529e-fc1a-4e70-a439-0e12107363a8', N'f1526d67-e08d-44e0-a138-575cad4482ed', 50, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-22' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-22' AS Date), N'Vàng', N'60')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'79786c57-7a6b-47fd-b621-10b6c2adadbd', N'48d38fbd-0d8b-4667-82c8-cc98a051ecef', 50, N'string', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-22' AS Date), N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-22' AS Date), N'Vàng', N'60')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'5b13578f-4d69-4e49-8d28-113fc06a0e4a', N'91bd6944-aa29-4901-a9bd-ad1ac37b7914', 20, N'Product Details: Crew neck, Engineered print placement, Ribbed trims, Made with organic cotton yarn', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-22' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-22' AS Date), N'20', N'multicolor')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'53a60fe5-de5e-4ab2-bdcf-1196ddc6349f', N'85b490cd-22ed-4f78-9116-96421520ab8d', 55, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Black', N'Heel height: 60mm')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'bfc240b4-76de-489d-943c-12acc61f305b', N'18fa1179-a689-4d20-88f3-4b239decbeb2', 88, N'Best Saler', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'White', N'Heel height: 60mm')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'8e709d5f-26e3-46a5-bca4-1cd532fad310', N'20c93f49-86ed-4b65-973a-4018393b8fc9', 30, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Make Color', N'Sole height: 45mm')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'0cf2d31c-9388-4df8-90e2-21e9e9152d7d', N'69874bb5-3606-49a5-9755-ccb5ec31d892', 100, N'Best Saler', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'White', N'Harness with tonal embroidery, Single button fastening, Made with certified wool yarn')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'ca0fd4aa-701a-471c-bbc5-22a3a73e3183', N'c883f948-785f-4f4f-b286-cbd4e50408f9', 20, N'Test Thử Update', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-17' AS Date), N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-17' AS Date), N'White', N'20 x 12 x 8 cm / 7.8 x 4.7 x 3.1 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'8a1f543c-0fe1-4cc0-89b7-2682c1a45932', N'a4a2f464-edef-4faf-a553-d2a74dcaf740', 100, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'indigo', N'Notched lapels, Single button fastening, Made with certified wool yarn')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'2aa4ea77-f918-4295-97c9-26e3fe7ce4dc', N'29d9002b-036c-4ecc-95a4-4cb7cbe51021', 20, N'string', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-16' AS Date), N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-16' AS Date), N'White', N'20 x 12 x 8 cm / 7.8 x 4.7 x 3.1 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'41892dc6-64d3-4dde-ada0-282f115458fb', N'4c9fa45d-14ce-46a3-8008-6fae1a5bf3e7', 5, N'string', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-16' AS Date), N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-16' AS Date), N'Red', N'20 x 12 x 8 cm / 7.8 x 4.7 x 3.1 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'7c26ea94-d8d4-4874-aaa2-29eb9d057b3b', N'3be4d5a8-705e-4515-a679-2cb15997b274', 100, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'indigo', N'Large peak lapels, Side jetted pockets, Concealed fastening, Contains certified wool yarn')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'1d51475f-cec7-447d-aa59-2bea153032b5', N'9e1191be-2935-4a2a-b10d-8b94e8ab3461', 99, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Make Color', N'Point collar, Mismatched pockets, Zip fastening, Made with organic cotton yarn')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'658ec8c0-8d8e-43da-93d8-2c77d9a9ef8c', N'c68da26d-1dd1-4619-9e8f-2cd3b16198cf', 100, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'indigo', N'Harness with tonal embroidery, Single button fastening, Made with certified wool yarn')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'a20327a0-4422-48b2-8336-310961a503cc', N'f1526d67-e08d-44e0-a138-575cad4482ed', 40, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-22' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-22' AS Date), N'Xanh lá', N'60')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'd99dfa68-b673-467f-a499-31dc70d21b48', N'9e1191be-2935-4a2a-b10d-8b94e8ab3461', 77, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Black', N'Point collar, Mismatched pockets, Zip fastening, Made with organic cotton yarn')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'f465a8f2-ba25-45be-affd-341df242da87', N'85b490cd-22ed-4f78-9116-96421520ab8d', 33, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Make Color', N'Heel height: 60mm')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'dec7bef3-87e1-4a1b-a8ce-3554419ed46f', N'7aa7a7cf-cb03-4107-ab4f-6a567b98f6f7', 60, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Black', N'Peak lapels with Collage embroidery, Single button fastening, Made with certified wool yarn')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'7848c6e0-58ba-450b-93d5-3587876a1bda', N'93726eae-33a2-4f02-82c8-f4e02323c5f2', 35, N'string', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-16' AS Date), N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-16' AS Date), N'Yellow', N'20 x 12 x 8 cm / 7.8 x 4.7 x 3.1 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'f8ea18f4-1866-4096-a3f4-37439a24ab4b', N'9ee587b0-2e08-413c-96c4-11a89fbdc473', 50, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'indigo', N'Zip and button fastening, Regular fit, Made with organic cotton yarn')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'808b3cd9-4ec1-4031-9a1c-38453ae92dfc', N'f1526d67-e08d-44e0-a138-575cad4482ed', 100, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-22' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-22' AS Date), N'Xám', N'60')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'5381b772-2f72-40eb-86a9-3b797bb18c8d', N'51e078f4-0b83-469c-a915-ddb1bbcfc0fa', 50, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'indigo', N'Zip and button fastening, Regular fit, Made with organic cotton yarn')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'44057b0a-1407-4cdd-a0f9-3c3c8c9a82a5', N'69874bb5-3606-49a5-9755-ccb5ec31d892', 60, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Black', N'Harness with tonal embroidery, Single button fastening, Made with certified wool yarn')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'4d927fa7-c891-47a0-8718-3c990cc36c9a', N'4c9fa45d-14ce-46a3-8008-6fae1a5bf3e7', 20, N'string', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-16' AS Date), N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-16' AS Date), N'White', N'20 x 12 x 8 cm / 7.8 x 4.7 x 3.1 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'8d5c6076-84ac-47ec-b39f-3dcb4730ea2c', N'65737a11-bf28-45a5-be76-6b15a12238ca', 50, N'Dimensions: 28 x 20 x 11 cm / 11 x 7.8 x 4.3 inches Strap drop: 30 cm / 11.8 inches Magnetic fastening Fixed chain strap Brass hardware with antique silver finishing Contrasting suede lining', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Black', N'63 x 43 x 23cm / 24.8 x 16.9 x 9 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'0d1c6cd2-64c4-46cc-8a72-419fa3af901d', N'69874bb5-3606-49a5-9755-ccb5ec31d892', 100, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'indigo', N'Harness with tonal embroidery, Single button fastening, Made with certified wool yarn')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'3af8020b-e767-4a6d-8c65-4335625914e3', N'd4b648e9-6db0-42f1-bc46-aadfd61ed404', 50, N'Best Saler', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'White', N'Leather trims, Flap pockets, Button fastening')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'2988fd5a-e516-4887-baf9-44a7dc388fe7', N'1a55b8d4-6e24-4235-bc92-a31844ba0e72', 100, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Black', N'The style fits true to size')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'e21332ee-c462-4698-909a-4d950c26c246', N'a976c3bb-4319-4992-a8db-9bdb89118587', 100, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Black', N'Heel height: 40mm')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'ad278630-326d-4087-a195-4f4dfc553ad2', N'91bd6944-aa29-4901-a9bd-ad1ac37b7914', 50, N'Product Details: Crew neck, Engineered print placement, Ribbed trims, Made with organic cotton yarn', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-22' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-22' AS Date), N'50', N'Black')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'd4da64ec-41ba-4554-96b2-503297122d34', N'5df57d0c-5f00-4775-a9bf-da5079af0c94', 100, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-22' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-22' AS Date), N'Xám', N'60')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'5d8075df-ac9f-4dac-bc68-526af113e068', N'92ea0112-f3fe-4fed-b25a-3c9b542b1231', 100, N'Dimensions: 28 x 20 x 11 cm / 11 x 7.8 x 4.3 inches Strap drop: 30 cm / 11.8 inches Magnetic fastening Fixed chain strap Brass hardware with antique silver finishing Contrasting suede lining', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'White', N'28 x 20 x 11 cm / 11 x 7.8 x 4.3 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'aeea95ab-0a2a-45cc-9390-52cf836bf0d4', N'0ed38557-a754-4826-a444-8dbceb77d3d4', 100, N'string', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-19' AS Date), N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-19' AS Date), N'Vàng', N'L')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'f00de905-5874-448c-b1a2-566fd131d532', N'b60a6c5f-1b4e-4270-8339-49a8c1a5bf47', 100, N'Dimensions: 28 x 20 x 11 cm / 11 x 7.8 x 4.3 inches Strap drop: 30 cm / 11.8 inches Magnetic fastening Fixed chain strap Brass hardware with antique silver finishing Contrasting suede lining', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'White', N'10 x 18 x 5cm / 3.9 x 7 x 1.9 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'f5134286-499a-4df2-a8eb-57b6b30e728c', N'81515973-84b5-472f-be8f-3766917f4c84', 50, N'Black shiny calfskin leather lace-up boot with silver-finished metal hardware, contrast stitching and a thick oversized rubber tread sole. Boot silhouette with a round toe shape. Finished with an Alexander McQueen signature on the tongue.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Black', N'39-41')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'e3507b25-5fd5-4974-b78f-593f3d2022f3', N'65737a11-bf28-45a5-be76-6b15a12238ca', 20, N'Due to the appearance of the product, we recommend stowing it in your hold luggage when passing through airport security. For the same reason we recommend not taking the bag to public places, such as law courts and sports stadiums, where there may be security checks.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'blackwhite', N'63 x 43 x 23cm / 24.8 x 16.9 x 9 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'89429711-83d0-4919-99a0-59f37889d91a', N'3b053400-7e3b-4bc8-b9ea-db2c1d22cb04', 50, N'string', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-22' AS Date), N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-22' AS Date), N'Nâu Moka', N'60')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'd7a9bad9-56bf-4d01-95af-5e5e8cdba140', N'd4b648e9-6db0-42f1-bc46-aadfd61ed404', 30, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Black', N'Leather trims, Flap pockets, Button fastening')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'8e6672f0-f913-49b0-8c6d-5f4ac038bd3a', N'1a55b8d4-6e24-4235-bc92-a31844ba0e72', 40, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Make Color', N'The style fits true to size')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'3ff3a9b2-24ad-48d1-b0ed-62373cf66aa4', N'20c93f49-86ed-4b65-973a-4018393b8fc9', 50, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Black', N'Sole height: 45mm')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'6a0dac54-6d5f-4bb7-ae3b-62df40afbef0', N'c883f948-785f-4f4f-b286-cbd4e50408f9', 20, N'Test Thử Update', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-17' AS Date), N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-17' AS Date), N'White', N'20 x 12 x 8 cm / 7.8 x 4.7 x 3.1 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'a68d216e-92b3-4e87-8aac-62e6157034d8', N'32ca16db-4339-40c9-8ae0-1710b1f1f10e', 50, N'Dimensions: 28 x 20 x 11 cm / 11 x 7.8 x 4.3 inches Strap drop: 30 cm / 11.8 inches Magnetic fastening Fixed chain strap Brass hardware with antique silver finishing Contrasting suede lining', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Black', N'10 x 18 x 5cm / 3.9 x 7 x 1.9 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'1c4069df-a117-431b-90e4-63eab6f540eb', N'a4a2f464-edef-4faf-a553-d2a74dcaf740', 100, N'Best Saler', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'White', N'Notched lapels, Single button fastening, Made with certified wool yarn')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'0bd25120-9cd0-40b5-80f9-683951a0c40a', N'9e3eae3a-5599-47db-8bcf-728d4e5f6e8b', 100, N'Dimensions: 28 x 20 x 11 cm / 11 x 7.8 x 4.3 inches Strap drop: 30 cm / 11.8 inches Magnetic fastening Fixed chain strap Brass hardware with antique silver finishing Contrasting suede lining', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'White', N'17.5 x 9.5 x 4 cm / 6.8 x 3.7 x 1.5 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'fe64fedd-80b6-4c05-b52e-6b3114011b47', N'29d9002b-036c-4ecc-95a4-4cb7cbe51021', 5, N'string', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-16' AS Date), N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-16' AS Date), N'Red', N'20 x 12 x 8 cm / 7.8 x 4.7 x 3.1 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'8ffc3336-90dd-4438-9e30-7205eecd3620', N'32ca16db-4339-40c9-8ae0-1710b1f1f10e', 100, N'Dimensions: 28 x 20 x 11 cm / 11 x 7.8 x 4.3 inches Strap drop: 30 cm / 11.8 inches Magnetic fastening Fixed chain strap Brass hardware with antique silver finishing Contrasting suede lining', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'White', N'10 x 18 x 5cm / 3.9 x 7 x 1.9 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'265562a5-85ed-4378-ac68-7210a6b81d0f', N'caabb41b-171a-4f7b-928d-c67e05fe5b7e', 100, N'Dimensions: 28 x 20 x 11 cm / 11 x 7.8 x 4.3 inches Strap drop: 30 cm / 11.8 inches Magnetic fastening Fixed chain strap Brass hardware with antique silver finishing Contrasting suede lining', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'White', N'20 x 12 x 4cm / 7.8 x 4.7 x 1.5 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'fb697166-2187-42ba-b680-72cf46e72d94', N'9ee587b0-2e08-413c-96c4-11a89fbdc473', 30, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Black', N'Zip and button fastening, Regular fit, Made with organic cotton yarn')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'e0f21cc6-0e01-4606-8ef7-775ed76388fd', N'5df57d0c-5f00-4775-a9bf-da5079af0c94', 50, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-22' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-22' AS Date), N'Nâu Moka', N'60')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'a4661508-de1b-4a50-b4ff-783c40409a9e', N'3be4d5a8-705e-4515-a679-2cb15997b274', 60, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Black', N'Large peak lapels, Side jetted pockets, Concealed fastening, Contains certified wool yarn')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'98853ccd-66be-4dc7-a945-78b881473160', N'b60a6c5f-1b4e-4270-8339-49a8c1a5bf47', 20, N'Due to the appearance of the product, we recommend stowing it in your hold luggage when passing through airport security. For the same reason we recommend not taking the bag to public places, such as law courts and sports stadiums, where there may be security checks.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Bee', N'10 x 18 x 5cm / 3.9 x 7 x 1.9 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'9fdbd2d3-f20a-4aef-bfa9-78ff83b5722e', N'29d9002b-036c-4ecc-95a4-4cb7cbe51021', 10, N'string', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-16' AS Date), N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-16' AS Date), N'Black calfskin', N'20 x 12 x 8 cm / 7.8 x 4.7 x 3.1 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'62db07db-97fc-435f-a597-7d0e723e0b05', N'4c9fa45d-14ce-46a3-8008-6fae1a5bf3e7', 10, N'string', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-16' AS Date), N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-16' AS Date), N'Black calfskin', N'20 x 12 x 8 cm / 7.8 x 4.7 x 3.1 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'54bbaf05-bca4-4e10-9620-7db594dc5f6e', N'c68da26d-1dd1-4619-9e8f-2cd3b16198cf', 100, N'Best Saler', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'White', N'Harness with tonal embroidery, Single button fastening, Made with certified wool yarn')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'3cb52231-db19-4457-b903-81de402f1be9', N'91bd6944-aa29-4901-a9bd-ad1ac37b7914', 33, N'Product Details: Crew neck, Engineered print placement, Ribbed trims, Made with organic cotton yarn', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-22' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-22' AS Date), N'33', N'WHite')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'e1e74f71-9794-4101-a29f-83cad3bffc36', N'85b490cd-22ed-4f78-9116-96421520ab8d', 44, N'Best Saler', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'White', N'Heel height: 60mm')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'3df2ee91-f89f-425b-af80-8a1667a8d920', N'0ed38557-a754-4826-a444-8dbceb77d3d4', 2, N'string', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-19' AS Date), N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-19' AS Date), N'Đỏ', N'M')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'344cffd9-8b86-424d-8652-8aea1ef16681', N'b60a6c5f-1b4e-4270-8339-49a8c1a5bf47', 50, N'Dimensions: 28 x 20 x 11 cm / 11 x 7.8 x 4.3 inches Strap drop: 30 cm / 11.8 inches Magnetic fastening Fixed chain strap Brass hardware with antique silver finishing Contrasting suede lining', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Black', N'10 x 18 x 5cm / 3.9 x 7 x 1.9 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'e1b0631d-1704-4aa9-a586-8c5bbd8b8ae6', N'9e3eae3a-5599-47db-8bcf-728d4e5f6e8b', 50, N'Dimensions: 28 x 20 x 11 cm / 11 x 7.8 x 4.3 inches Strap drop: 30 cm / 11.8 inches Magnetic fastening Fixed chain strap Brass hardware with antique silver finishing Contrasting suede lining', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Black', N'17.5 x 9.5 x 4 cm / 6.8 x 3.7 x 1.5 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'633bb248-b288-4ce7-b75a-940961dde77a', N'93726eae-33a2-4f02-82c8-f4e02323c5f2', 5, N'string', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-16' AS Date), N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-16' AS Date), N'Red', N'20 x 12 x 8 cm / 7.8 x 4.7 x 3.1 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'83abd524-1705-4629-b220-95dc7a7c5c8d', N'caabb41b-171a-4f7b-928d-c67e05fe5b7e', 50, N'Dimensions: 28 x 20 x 11 cm / 11 x 7.8 x 4.3 inches Strap drop: 30 cm / 11.8 inches Magnetic fastening Fixed chain strap Brass hardware with antique silver finishing Contrasting suede lining', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Black', N'20 x 12 x 4cm / 7.8 x 4.7 x 1.5 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'c05b433f-e30d-4a44-9a5f-99ec6ff41256', N'caabb41b-171a-4f7b-928d-c67e05fe5b7e', 20, N'Due to the appearance of the product, we recommend stowing it in your hold luggage when passing through airport security. For the same reason we recommend not taking the bag to public places, such as law courts and sports stadiums, where there may be security checks.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'pink', N'20 x 12 x 4cm / 7.8 x 4.7 x 1.5 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'67f8a1a6-d922-4a39-830e-9a6296e1a944', N'77e91cbd-6575-42c1-a740-648740feeb1b', 50, N'Best Saler', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'White', N'Flap pockets, Zip fastening')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'ec47a687-683a-433a-a807-9ca1dc54f97a', N'786db983-074b-4a71-a20d-b4d3cb86dd81', 20, N'Due to the appearance of the product, we recommend stowing it in your hold luggage when passing through airport security. For the same reason we recommend not taking the bag to public places, such as law courts and sports stadiums, where there may be security checks.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Bee', N'24 x 14.5 x 8 cm / 9.4 x 5.7 x 3.1 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'14e83ed0-ca59-416c-bb13-9e078eb81d9d', N'9e1191be-2935-4a2a-b10d-8b94e8ab3461', 88, N'Best Saler', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'White', N'Point collar, Mismatched pockets, Zip fastening, Made with organic cotton yarn')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'd367cfd0-fd95-49cd-aa25-a2eb63a0a63d', N'77e91cbd-6575-42c1-a740-648740feeb1b', 50, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Khaki', N'Flap pockets, Zip fastening')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'1ad25454-40b2-4b37-b075-a69930317029', N'18fa1179-a689-4d20-88f3-4b239decbeb2', 77, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Black', N'Heel height: 60mm')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'8b503bde-618b-431c-9fee-a6a9554e99bb', N'29d9002b-036c-4ecc-95a4-4cb7cbe51021', 35, N'string', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-16' AS Date), N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-16' AS Date), N'Yellow', N'20 x 12 x 8 cm / 7.8 x 4.7 x 3.1 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'3e76522a-5de5-4a55-902d-a8b17ed1f05f', N'77e91cbd-6575-42c1-a740-648740feeb1b', 30, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Black', N'Flap pockets, Zip fastening')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'787e264e-04d2-4e3c-9d04-a9388fb15b69', N'48d38fbd-0d8b-4667-82c8-cc98a051ecef', 40, N'string', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-22' AS Date), N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-22' AS Date), N'Xanh lá', N'60')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'36e8676a-4d06-44db-a181-aefbaaa70d76', N'786db983-074b-4a71-a20d-b4d3cb86dd81', 100, N'Dimensions: 28 x 20 x 11 cm / 11 x 7.8 x 4.3 inches Strap drop: 30 cm / 11.8 inches Magnetic fastening Fixed chain strap Brass hardware with antique silver finishing Contrasting suede lining', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'White', N'24 x 14.5 x 8 cm / 9.4 x 5.7 x 3.1 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'060e7230-13d1-476e-b05f-b234dff9265d', N'51e078f4-0b83-469c-a915-ddb1bbcfc0fa', 50, N'Best Saler', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'White', N'Zip and button fastening, Regular fit, Made with organic cotton yarn')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'3f48e37a-2760-46d7-a247-b29af9d0170f', N'81515973-84b5-472f-be8f-3766917f4c84', 100, N'Black shiny calfskin leather lace-up boot with silver-finished metal hardware, contrast stitching and a thick oversized rubber tread sole. Boot silhouette with a round toe shape. Finished with an Alexander McQueen signature on the tongue.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'White', N'42-43')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'97dad070-3c69-4177-986b-b2e985ee1a37', N'c68da26d-1dd1-4619-9e8f-2cd3b16198cf', 60, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Black', N'Harness with tonal embroidery, Single button fastening, Made with certified wool yarn')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'ee0ce2a3-614e-421b-a4dc-b859e4e6be31', N'5df57d0c-5f00-4775-a9bf-da5079af0c94', 40, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-22' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-22' AS Date), N'Đen/xanh denim', N'60')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'a1683b49-2537-433e-a7f1-bfed765e47b7', N'786db983-074b-4a71-a20d-b4d3cb86dd81', 50, N'Dimensions: 28 x 20 x 11 cm / 11 x 7.8 x 4.3 inches Strap drop: 30 cm / 11.8 inches Magnetic fastening Fixed chain strap Brass hardware with antique silver finishing Contrasting suede lining', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Black', N'24 x 14.5 x 8 cm / 9.4 x 5.7 x 3.1 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'ccf1deb3-99b7-4141-af48-c2aec7020d29', N'9e3eae3a-5599-47db-8bcf-728d4e5f6e8b', 20, N'Due to the appearance of the product, we recommend stowing it in your hold luggage when passing through airport security. For the same reason we recommend not taking the bag to public places, such as law courts and sports stadiums, where there may be security checks.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'royal blue', N'17.5 x 9.5 x 4 cm / 6.8 x 3.7 x 1.5 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'd3adc0a2-b5b1-4b9e-8f4a-c2cf2c247b7a', N'93726eae-33a2-4f02-82c8-f4e02323c5f2', 10, N'string', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-16' AS Date), N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-16' AS Date), N'Black calfskin', N'20 x 12 x 8 cm / 7.8 x 4.7 x 3.1 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'f2d337d9-d53f-43c6-a6ce-c67372e6caa8', N'93726eae-33a2-4f02-82c8-f4e02323c5f2', 20, N'string', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-16' AS Date), N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-16' AS Date), N'White', N'20 x 12 x 8 cm / 7.8 x 4.7 x 3.1 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'e8bcf581-56f9-4d9a-9fb4-c6dbdc28cbcc', N'3be4d5a8-705e-4515-a679-2cb15997b274', 100, N'Best Saler', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'White', N'Large peak lapels, Side jetted pockets, Concealed fastening, Contains certified wool yarn')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'bd8c1d41-1dd5-4168-89bc-cc4686e1c33d', N'c883f948-785f-4f4f-b286-cbd4e50408f9', 20, N'Test Thử Update', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-17' AS Date), N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-17' AS Date), N'White', N'20 x 12 x 8 cm / 7.8 x 4.7 x 3.1 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'a3aeabb1-82e0-48ab-b2ef-cea6413b285a', N'32ca16db-4339-40c9-8ae0-1710b1f1f10e', 20, N'Due to the appearance of the product, we recommend stowing it in your hold luggage when passing through airport security. For the same reason we recommend not taking the bag to public places, such as law courts and sports stadiums, where there may be security checks.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'gold', N'10 x 18 x 5cm / 3.9 x 7 x 1.9 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'c91ed473-adec-42a7-af77-d0c18c9cddc4', N'65737a11-bf28-45a5-be76-6b15a12238ca', 100, N'Dimensions: 28 x 20 x 11 cm / 11 x 7.8 x 4.3 inches Strap drop: 30 cm / 11.8 inches Magnetic fastening Fixed chain strap Brass hardware with antique silver finishing Contrasting suede lining', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'White', N'63 x 43 x 23cm / 24.8 x 16.9 x 9 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'f5f8ff07-97a3-4765-8300-d10fa4fd3188', N'9ee587b0-2e08-413c-96c4-11a89fbdc473', 50, N'Best Saler', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'White', N'Zip and button fastening, Regular fit, Made with organic cotton yarn')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'27de54a6-397e-43ba-9c89-d349f4f1ae7f', N'18fa1179-a689-4d20-88f3-4b239decbeb2', 99, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Make Color', N'Heel height: 60mm')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'17b2f6ed-6b23-4d9c-b866-d8e9d0ca8b40', N'92ea0112-f3fe-4fed-b25a-3c9b542b1231', 20, N'Dimensions: 28 x 20 x 11 cm / 11 x 7.8 x 4.3 inches Strap drop: 30 cm / 11.8 inches Magnetic fastening Fixed chain strap Brass hardware with antique silver finishing Contrasting suede lining', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Bee', N'28 x 20 x 11 cm / 11 x 7.8 x 4.3 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'6dd245ae-f9e4-4b9e-b014-dac45a59f124', N'20c93f49-86ed-4b65-973a-4018393b8fc9', 50, N'Best Saler', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'White', N'Sole height: 45mm')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'3cda154d-6762-4052-abc0-de08a3c98a67', N'a976c3bb-4319-4992-a8db-9bdb89118587', 90, N'Best Saler', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'White', N'Heel height: 40mm')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'e76ade3d-9963-43da-b4a0-e1064c17fbda', N'81515973-84b5-472f-be8f-3766917f4c84', 20, N'Black shiny calfskin leather lace-up boot with silver-finished metal hardware, contrast stitching and a thick oversized rubber tread sole. Boot silhouette with a round toe shape. Finished with an Alexander McQueen signature on the tongue.', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'royal blue', N'36-38')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'152b66a5-b6b0-46d2-87cf-e364c56886e2', N'd4b648e9-6db0-42f1-bc46-aadfd61ed404', 99, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Many Color', N'Leather trims, Flap pockets, Button fastening')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'04c8341c-4ebe-4c59-bee6-e70bdbba0919', N'92ea0112-f3fe-4fed-b25a-3c9b542b1231', 50, N'Dimensions: 28 x 20 x 11 cm / 11 x 7.8 x 4.3 inches Strap drop: 30 cm / 11.8 inches Magnetic fastening Fixed chain strap Brass hardware with antique silver finishing Contrasting suede lining', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Black', N'28 x 20 x 11 cm / 11 x 7.8 x 4.3 inches')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'4b981811-d3a0-4823-8c19-ebe5d952c662', N'a976c3bb-4319-4992-a8db-9bdb89118587', 40, N'string', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-20' AS Date), N'Make Color', N'Heel height: 40mm')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'0dd45d33-6cec-4ca3-a6c6-f85f923d6118', N'48d38fbd-0d8b-4667-82c8-cc98a051ecef', 100, N'string', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-22' AS Date), N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-22' AS Date), N'Xám', N'60')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'd33bf5ce-6f75-4599-bde0-f9e367278d2a', N'0ed38557-a754-4826-a444-8dbceb77d3d4', 1, N'string', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-19' AS Date), N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-19' AS Date), N'Trắng', N'S')
+GO
+INSERT [dbo].[Product_Detail] ([Id], [IdProduct], [Number], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Color], [Size]) VALUES (N'5dd3caa1-6254-4a45-a9ca-fd32f4b8842d', N'0ed38557-a754-4826-a444-8dbceb77d3d4', 50, N'string', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-19' AS Date), N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-19' AS Date), N'Đen', N'XL')
+GO
+INSERT [dbo].[ProductType] ([Id], [Name], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate]) VALUES (N'79f0abcc-f8d5-42ce-b379-083a3b900efa', N'Bag', N'Túi xách , thường được gọi là ví trong tiếng Anh Bắc Mỹ , là một chiếc túi có tay cầm cỡ vừa đến lớn dùng để đựng các vật dụng cá nhân. Nó còn được gọi là sổ tay bỏ túi ở nhiều nơi ở Mỹ', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-14' AS Date), N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-19' AS Date))
+GO
+INSERT [dbo].[ProductType] ([Id], [Name], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate]) VALUES (N'5a055308-6174-4d27-8eca-1e8870412dea', N'Test Product Type', N'Đây là test', N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-19' AS Date), NULL, CAST(N'2023-09-19' AS Date))
+GO
+INSERT [dbo].[ProductType] ([Id], [Name], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate]) VALUES (N'03105da6-15fa-4e1c-81c1-6e2393d058d4', N'CAMPAIGN', N'Áo khoác', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-19' AS Date), NULL, CAST(N'2023-09-19' AS Date))
+GO
+INSERT [dbo].[ProductType] ([Id], [Name], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate]) VALUES (N'5e03c48a-e2aa-4d4e-b7a8-7d2ff6d2031a', N'Shoe', N'Giày ', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-19' AS Date), NULL, CAST(N'2023-09-19' AS Date))
+GO
+INSERT [dbo].[ProductType] ([Id], [Name], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate]) VALUES (N'3710e807-4cc9-41ec-a10a-f8b2d03db309', N'VEST', N'Áo VEST', N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-19' AS Date), NULL, CAST(N'2023-09-19' AS Date))
+GO
+INSERT [dbo].[Shop] ([Id], [IdUser], [BrandName], [Avata]) VALUES (N'cc057caf-9e72-428d-95d7-3470b8d92742', N'13e2096d-a2e1-4301-884f-613d5598bfba', N'BleuBird', N'string')
+GO
+INSERT [dbo].[Shop] ([Id], [IdUser], [BrandName], [Avata]) VALUES (N'eb562475-22e4-4063-ad02-c702b1b8ebd6', N'69303837-3fe5-42d7-9521-9a19ea80a325', N'Shop EAUT', N'ảnh đại diện')
+GO
+INSERT [dbo].[UsedStatus] ([Number], [Name]) VALUES (0, N'Đang sử dụng')
+GO
+INSERT [dbo].[UsedStatus] ([Number], [Name]) VALUES (1, N'Ảnh chính của sản phẩm')
+GO
+INSERT [dbo].[UsedStatus] ([Number], [Name]) VALUES (2, N'Ảnh phụ của sản phẩm')
+GO
+INSERT [dbo].[UsedStatus] ([Number], [Name]) VALUES (3, N'Chờ xác nhận của Shop')
+GO
+INSERT [dbo].[UsedStatus] ([Number], [Name]) VALUES (4, N'Đã giao cho bên vận chuyển')
+GO
+INSERT [dbo].[UsedStatus] ([Number], [Name]) VALUES (5, N'Đang giao đến bạn')
+GO
+INSERT [dbo].[UsedStatus] ([Number], [Name]) VALUES (6, N'Đã giao thành công')
+GO
+INSERT [dbo].[Users] ([Id], [FirstName], [LastName], [FullName], [Email], [PassWordHas], [Phone], [Address], [Gender], [DateOfBirth], [Avata], [UsedState], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Roles]) VALUES (N'13e2096d-a2e1-4301-884f-613d5598bfba', N'Nguyễn', N'Hiếu', N'Nguyễn Hiếu', N'hieu@gmail.com', N'fCuBl0ZJL1s5/DNmtvUnz0rRvGCByPIQpGkjjWBfUUxG8ym0xQRi0nvdWJlLIcxLuBdpES5DDsz5zDZ5SFyC+g==', 388089507, N'Yên Tân - Ý Yên - Nam Định', 1, CAST(N'2023-09-14' AS Date), N'https://img.freepik.com/free-icon/user_318-159711.jpg', 0, NULL, NULL, CAST(N'2023-09-14' AS Date), N'13e2096d-a2e1-4301-884f-613d5598bfba', CAST(N'2023-09-21' AS Date), N'User')
+GO
+INSERT [dbo].[Users] ([Id], [FirstName], [LastName], [FullName], [Email], [PassWordHas], [Phone], [Address], [Gender], [DateOfBirth], [Avata], [UsedState], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Roles]) VALUES (N'2766104d-32f5-4861-adcb-8090fd46defd', N'Nguyễn', N'Hiếu', N'Nguyễn Hiếu', N'admin@gmail.com', N'fCuBl0ZJL1s5/DNmtvUnz0rRvGCByPIQpGkjjWBfUUxG8ym0xQRi0nvdWJlLIcxLuBdpES5DDsz5zDZ5SFyC+g==', 388089507, N'Yên Tân ý Yên nam định', 1, CAST(N'2023-09-19' AS Date), N'', 0, NULL, NULL, CAST(N'2023-09-19' AS Date), N'2766104d-32f5-4861-adcb-8090fd46defd', CAST(N'2023-09-21' AS Date), N'User')
+GO
+INSERT [dbo].[Users] ([Id], [FirstName], [LastName], [FullName], [Email], [PassWordHas], [Phone], [Address], [Gender], [DateOfBirth], [Avata], [UsedState], [Description], [CreateBy], [CreateDate], [ModifiedBy], [ModifiedDate], [Roles]) VALUES (N'69303837-3fe5-42d7-9521-9a19ea80a325', N'Shop', N'EAUT', N'Shop EAUT', N'eaut@gmail.com', N'fCuBl0ZJL1s5/DNmtvUnz0rRvGCByPIQpGkjjWBfUUxG8ym0xQRi0nvdWJlLIcxLuBdpES5DDsz5zDZ5SFyC+g==', 123456789, N'Địa chỉ của shop', 1, CAST(N'2023-09-22' AS Date), N'https://img.freepik.com/free-icon/user_318-159711.jpg', 0, NULL, NULL, CAST(N'2023-09-22' AS Date), NULL, CAST(N'2023-09-22' AS Date), N'User')
+GO
+ALTER TABLE [dbo].[Cart]  WITH CHECK ADD FOREIGN KEY([IdProduct])
+REFERENCES [dbo].[Product_Detail] ([Id])
+GO
+ALTER TABLE [dbo].[Cart]  WITH CHECK ADD FOREIGN KEY([IdUser])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[FeedBack]  WITH CHECK ADD FOREIGN KEY([IdProduct])
+REFERENCES [dbo].[Product] ([Id])
+GO
+ALTER TABLE [dbo].[FeedBack]  WITH CHECK ADD FOREIGN KEY([IdUser])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[Image]  WITH CHECK ADD FOREIGN KEY([IdProduct])
+REFERENCES [dbo].[Product] ([Id])
+GO
+ALTER TABLE [dbo].[Orders]  WITH CHECK ADD FOREIGN KEY([IdCart])
+REFERENCES [dbo].[Cart] ([Id])
+GO
+ALTER TABLE [dbo].[Orders]  WITH CHECK ADD FOREIGN KEY([IdDiscount])
+REFERENCES [dbo].[Discount] ([Id])
+GO
+ALTER TABLE [dbo].[Orders]  WITH CHECK ADD FOREIGN KEY([IdProductDetail])
+REFERENCES [dbo].[Product_Detail] ([Id])
+GO
+ALTER TABLE [dbo].[Orders]  WITH CHECK ADD FOREIGN KEY([IdUser])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[Product]  WITH CHECK ADD FOREIGN KEY([IdProductType])
+REFERENCES [dbo].[ProductType] ([Id])
+GO
+ALTER TABLE [dbo].[Product]  WITH CHECK ADD  CONSTRAINT [fk_Product_Id_Shop] FOREIGN KEY([IdShop])
+REFERENCES [dbo].[Shop] ([Id])
+GO
+ALTER TABLE [dbo].[Product] CHECK CONSTRAINT [fk_Product_Id_Shop]
+GO
+ALTER TABLE [dbo].[Product]  WITH CHECK ADD  CONSTRAINT [FK_Product_Producer_Again] FOREIGN KEY([IdProducer])
+REFERENCES [dbo].[Producer] ([Id])
+GO
+ALTER TABLE [dbo].[Product] CHECK CONSTRAINT [FK_Product_Producer_Again]
+GO
+ALTER TABLE [dbo].[Product_Detail]  WITH CHECK ADD FOREIGN KEY([IdProduct])
+REFERENCES [dbo].[Product] ([Id])
+GO
+ALTER TABLE [dbo].[Shop]  WITH CHECK ADD FOREIGN KEY([IdUser])
+REFERENCES [dbo].[Users] ([Id])
+GO
+/****** Object:  StoredProcedure [dbo].[AddCart]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[AddCart]
+    @CartItems CartModelTVP READONLY, -- TVP containing the list of products
+    @Result NVARCHAR(MAX) OUT
+AS
+BEGIN
+    DECLARE @Price DECIMAL(10, 2) -- Set the decimal places and digits before the decimal point
+
+    -- Create a temporary table to hold the data from the TVP
+    CREATE TABLE #TempCart
+    (
+        Id UNIQUEIDENTIFIER,
+        IdUser UNIQUEIDENTIFIER,
+        IdProduct UNIQUEIDENTIFIER,
+        Number INT
+    )
+
+    -- Copy data from the TVP into the temporary table
+    INSERT INTO #TempCart (Id, IdUser, IdProduct, Number)
+    SELECT Id, IdUser, IdProduct, Number FROM @CartItems
+
+    -- Loop through the temporary table
+    WHILE EXISTS (SELECT 1 FROM #TempCart)
+    BEGIN
+        DECLARE @Id UNIQUEIDENTIFIER, @IdUser UNIQUEIDENTIFIER, @IdProduct UNIQUEIDENTIFIER, @Number INT
+        SELECT TOP 1 @Id = Id, @IdUser = IdUser, @IdProduct = IdProduct, @Number = Number FROM #TempCart
+
+        DECLARE @check INT = (SELECT COUNT(Id) FROM Cart WHERE IdProduct = @IdProduct)
+
+        -- Check if the product exists in the Product_Detail table
+        IF NOT EXISTS (SELECT 1 FROM dbo.Product_Detail WHERE Id = @IdProduct)
+        BEGIN
+            SET @Result = N'Sản phẩm không tồn tại';
+            RETURN;
+        END
+
+        -- If the product does not exist in the cart, insert it
+        IF @check = 0
+        BEGIN
+            -- Get the price of the product from the Product table
+            SET @Price = (SELECT p.Price FROM dbo.Product_Detail pd JOIN dbo.Product p ON pd.IdProduct = p.Id  WHERE pd.Id = @IdProduct)
+
+            INSERT INTO dbo.Cart
+            (
+                Id,
+                IdUser,
+                IdProduct,
+                Number,
+                TotalPrice
+            )
+            VALUES
+            (
+                @Id, -- Id - uniqueidentifier
+                @IdUser, -- IdUser - uniqueidentifier
+                @IdProduct, -- IdProduct - uniqueidentifier
+                @Number, -- Number - int
+                (@Price * @Number)  -- TotalPrice - float
+            )
+            SET @Result = N'Thêm vào giỏ hàng thành công';
+        END
+        ELSE -- If the product already exists in the cart, update the quantity and total price
+        BEGIN
+            -- Get the price of the product from the Product table
+            SET @Price =  (SELECT p.Price FROM dbo.Product_Detail pd JOIN dbo.Product p ON pd.IdProduct = p.Id  WHERE pd.Id = @IdProduct)
+
+            DECLARE @NumberUpdate INT = ((SELECT Number FROM Cart WHERE IdProduct = @IdProduct) + @Number)
+            UPDATE dbo.Cart SET Number = @NumberUpdate, TotalPrice = (@NumberUpdate * @Price) WHERE IdProduct = @IdProduct
+            SET @Result = N'Thêm vào giỏ hàng thành công';
+        END
+
+        -- Delete the processed product from the temporary table
+        DELETE FROM #TempCart WHERE Id = @Id
+    END
+
+    -- Drop the temporary table
+    DROP TABLE #TempCart
+END
+GO
+/****** Object:  StoredProcedure [dbo].[AddOrders]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE procedure [dbo].[AddOrders]
+	@Id uniqueidentifier ,
+	@IdUser uniqueidentifier,
+	@IdCart uniqueidentifier = null,
+	@IdProductDetail uniqueidentifier,
+	@Description Nvarchar(Max),
+	@Number int,
+	@PriceShip float,
+	@UsedStatus int,
+	@CreateBy uniqueidentifier,
+	@CreateDate date,
+	@ModifiedDate date,
+	@Result Nvarchar(Max) out
+as
+
+begin
+	declare @PriceProduct float = (select  p.Price from Product_Detail pd join Product p on pd.IdProduct = p.Id where pd.Id = @IdProductDetail)
+	insert into Orders
+	(
+		Id,
+		IdUser,
+		IdCart,
+		IdProductDetail,
+		Description,
+		Number,
+		PriceShip,
+		TotalPrice,
+		CreateBy,
+		CreateDate,
+		ModifierDate,
+		UsedStatus
+	)
+	values 
+	(
+		@Id, 
+		@IdUser,
+		@IdCart,
+		@IdProductDetail,
+		@Description,
+		@Number,
+		@PriceShip,
+		((@PriceProduct*@Number)+ @PriceShip),
+		@CreateBy,
+		@CreateDate,
+		@ModifiedDate,
+		@UsedStatus
+	)
+
+	declare @NumberOld int = (select Number from Product_Detail where Id = @IdProductdetail);
+
+	update Product_Detail set Number = (@NumberOld - @Number)
+	if @@RowCount = 1 
+		set @Result = N'Thêm đơn hàng thành công';
+	else 
+		set @Result = N'Thêm đơn hàng thất bại'
+end
+GO
+/****** Object:  StoredProcedure [dbo].[AddProducer]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE	 PROCEDURE [dbo].[AddProducer]
+	@Id UNIQUEIDENTIFIER,
+	@Name NVARCHAR(Max),
+	@Country NVARCHAR(MAX),
+	@Address NVARCHAR(Max),
+	@Description NVARCHAR(MAX),
+	@UsedStated int,
+	@CreateBy UNIQUEIDENTIFIER,
+	@CreateDate DATE,
+	@ModifiedDate DATE,
+	@Result NVARCHAR(MAX) OUT
+AS
+BEGIN
+	SET NOCOUNT ON
+	DECLARE @cnt INT = (SELECT COUNT(*) FROM dbo.Producer WHERE Name = @Name);
+	IF @cnt = 1 SET @Result = N'Tên nhà cung cấp đã tồn tại';
+	ELSE 
+	BEGIN	
+		INSERT INTO dbo.Producer
+		(
+		    Id,
+		    Name,
+		    Country,
+		    Address,
+		    Description,
+		    UsedStated,
+		    CreateBy,
+		    CreateDate,
+		    ModifiedDate
+		)
+		VALUES
+		(   @Id, -- Id - uniqueidentifier
+		    @Name, -- Name - nvarchar(255)
+		    @Country, -- Country - nvarchar(255)
+		    @Address, -- Address - nvarchar(max)
+		    @Description, -- Description - nvarchar(max)
+		    @UsedStated, -- UsedStated - int
+		    @CreateBy, -- CreateBy - uniqueidentifier
+		    @CreateDate, -- CreateDate - date
+		    @ModifiedDate  -- ModifiedDate - date
+		    )
+		IF @@ROWCOUNT > 0 SET @Result = N'Thêm nhà cung cấp thành công';
+		ELSE SET @Result = N'Thêm nhà cung cấp thất bại';
+	END
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[AddProduct]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[AddProduct]
+    @Id UNIQUEIDENTIFIER,
+    @Name NVARCHAR(MAX),
+    @IdUser UNIQUEIDENTIFIER,
+	@IdProducer UNIQUEIDENTIFIER,
+    @IdProductType UNIQUEIDENTIFIER,
+    @Material NVARCHAR(MAX),
+    @Price FLOAT,
+    @Description NVARCHAR(MAX),
+    @IdDiscount UNIQUEIDENTIFIER = NULL,
+    @CreateBy UNIQUEIDENTIFIER,
+    @CreateDate DATE,
+    @ModifiedDate DATE,
+    @Images NVARCHAR(MAX), -- JSON string containing image data
+    @ProductDetails NVARCHAR(MAX), -- JSON string containing product details
+    @Result NVARCHAR(MAX) OUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Variables
+    DECLARE @IdShop UNIQUEIDENTIFIER;
+    DECLARE @cnt INT;
+    DECLARE @NameBrand NVARCHAR(MAX);
+    DECLARE @NewIdProducer UNIQUEIDENTIFIER = NEWID();
+    DECLARE @IdProducerToInsert UNIQUEIDENTIFIER;
+
+    -- Get Shop ID based on User ID
+    SELECT @IdShop = Id FROM dbo.Shop WHERE IdUser = @IdUser;
+
+    -- Check if a product with the same name already exists
+    SELECT @cnt = COUNT(Id) FROM dbo.Product WHERE Name = @Name;
+
+    -- Get the Shop's Brand Name
+    SELECT @NameBrand = BrandName FROM Shop WHERE Id = @IdShop;
+
+    -- Determine whether to insert the existing IdProducer or create a new one
+    IF (@NameBrand = N'BlueBird')
+    BEGIN
+        SET @IdProducerToInsert = @IdProducer; -- Use the provided IdProducer
+    END
+    ELSE
+    BEGIN
+        -- Create a new producer if not "BlueBird"
+        BEGIN TRY
+            -- Start a Producer transaction
+            BEGIN TRAN ProducerTransaction;
+
+            DECLARE @FullName NVARCHAR(MAX);
+            DECLARE @UserAddress NVARCHAR(MAX);
+
+            -- Get user's full name and address
+            SELECT @FullName = FullName, @UserAddress = Address FROM Users WHERE Id = @IdUser;
+
+            -- Insert into Producer table
+            INSERT INTO dbo.Producer (Id, Name, Address, UsedStated, CreateBy, CreateDate)
+            VALUES (@NewIdProducer, @FullName, @UserAddress, 0, @IdUser, GETDATE());
+
+            SET @IdProducerToInsert = @NewIdProducer; -- Use the newly created IdProducer
+
+            COMMIT TRAN ProducerTransaction;
+        END TRY
+        BEGIN CATCH
+            ROLLBACK TRAN ProducerTransaction;
+            SET @Result = N'Lỗi khi thêm Producer'; -- Set error message when an error occurs during Producer insertion
+            RETURN;
+        END CATCH
+    END;
+
+    -- Insert data into the Product table
+    BEGIN
+        BEGIN TRAN;
+
+        INSERT INTO dbo.Product
+        (
+            Id,
+            Name,
+            IdProducer,
+            IdProductType,
+            Material,
+            Price,
+            Description,
+            CreateBy,
+            CreateDate,
+            ModifiedDate,
+            UsedStatus,
+            IdDiscount,
+            IdShop
+        )
+        VALUES
+        (
+            @Id,
+            @Name,
+            @IdProducerToInsert,
+            @IdProductType,
+            @Material,
+            @Price,
+            @Description,
+            @CreateBy,
+            @CreateDate,
+            @ModifiedDate,
+            0,
+            @IdDiscount,
+            @IdShop
+        );
+
+        -- Check for errors during Product insertion
+        IF @@ERROR <> 0
+        BEGIN
+            ROLLBACK TRAN;
+            SET @Result = N'Lỗi khi thêm sản phẩm';
+        END
+        ELSE
+        BEGIN
+            -- If Product insertion is successful, proceed to insert data into Image and Product_Detail tables
+
+            -- Insert data into the Image table from the JSON string @Images
+            INSERT INTO dbo.Image (Id, IdProduct, Img, UsedStatus)
+            SELECT NEWID(), @Id, img, UsedStatus
+            FROM OPENJSON(@Images)
+            WITH (img NVARCHAR(MAX) '$.img', UsedStatus INT '$.UsedStatus');
+
+            -- Insert data into the Product_Detail table from the JSON string @ProductDetails
+            INSERT INTO dbo.Product_Detail
+            (
+                Id,
+                IdProduct,
+                Number,
+                Description,
+                CreateBy,
+                CreateDate,
+                ModifiedDate,
+                ModifiedBy,
+                Color,
+                Size
+            )
+            SELECT NEWID(), @Id, Number, Description, @CreateBy, GETUTCDATE(), @ModifiedDate, @CreateBy, Color, Size
+            FROM OPENJSON(@ProductDetails)
+            WITH (Number INT '$.Number', Description NVARCHAR(MAX) '$.Description', Color NVARCHAR(MAX) '$.Color', Size NVARCHAR(MAX) '$.Size');
+        END;
+    END;
+
+    -- Check for errors during Image and Product_Detail insertion
+    IF @@ERROR <> 0
+    BEGIN
+        ROLLBACK TRAN;
+        SET @Result = N'Lỗi khi thêm ảnh hoặc chi tiết sản phẩm';
+    END
+    ELSE
+    BEGIN
+        COMMIT TRAN;
+        SET @Result = N'Thêm sản phẩm thành công';
+    END;
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[AddProductType]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE	 PROCEDURE [dbo].[AddProductType]
+	@Id UNIQUEIDENTIFIER,
+	@Name NVARCHAR(Max),
+	@Description NVARCHAR(MAX),
+	@UsedStated int,
+	@CreateBy UNIQUEIDENTIFIER,
+	@CreateDate DATE,
+	@ModifiedDate DATE,
+	@Result NVARCHAR(MAX) OUT
+AS
+BEGIN
+	SET NOCOUNT ON
+	DECLARE @cnt INT = (SELECT COUNT(*) FROM dbo.ProductType WHERE Name = @Name);
+	IF @cnt = 1 SET @Result = N'Loại hàng này đã tồn tại';
+	ELSE 
+	BEGIN	
+		INSERT INTO dbo.ProductType
+		(
+		    Id,
+		    Name,
+		    Description,
+		    CreateBy,
+		    CreateDate,
+		    ModifiedDate
+		)
+		VALUES
+		(   @Id, -- Id - uniqueidentifier
+		    @Name, -- Name - nvarchar(255)
+		    @Description, -- Description - nvarchar(max)
+		    @CreateBy, -- CreateBy - uniqueidentifier
+		    @CreateDate, -- CreateDate - date
+		    @ModifiedDate  -- ModifiedDate - date
+		    )
+		IF @@ROWCOUNT > 0 SET @Result = N'Thêm loại hàng này thành công';
+		ELSE SET @Result = N'Thêm loại hàng này thất bại';
+	END
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[ChangePassWord]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[ChangePassWord]
+    @Id UNIQUEIDENTIFIER,
+    @PassOld NVARCHAR(MAX),
+    @PassNew NVARCHAR(MAX),
+    @Result NVARCHAR(MAX) OUT
+AS
+BEGIN
+    DECLARE @Check NVARCHAR(MAX) = (SELECT PassWordhas FROM Users WHERE Id = @Id);
+    IF @Check IS NULL
+    BEGIN
+        SET @Result = N'Tài khoản không tồn tại';
+    END
+    ELSE IF @Check != @PassOld
+    BEGIN
+        SET @Result = N'Mật khẩu cũ không đúng';
+    END
+    ELSE
+    BEGIN
+        UPDATE Users SET PassWordHas = @PassNew, ModifiedBy = @Id, ModifiedDate = GETDATE() WHERE Id = @Id;
+
+        IF @@RowCount = 1
+        BEGIN
+            SET @Result = N'Đổi mật khẩu thành công';
+        END
+        ELSE
+        BEGIN
+            SET @Result = N'Đổi mật khẩu thất bại';
+        END
+    END
+END
+GO
+/****** Object:  StoredProcedure [dbo].[DeleteCart]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE  PROCEDURE [dbo].[DeleteCart]
+	@Id UNIQUEIDENTIFIER,
+	@Result NVARCHAR(MAX) OUT
+AS
+BEGIN
+	
+	DECLARE @check INT = (SELECT COUNT(Id) FROM Cart WHERE Id = @Id)
+	IF @check = 0 
+		SET @Result = N'Không tồn tại'
+	ELSE 
+		BEGIN
+			DELETE FROM Cart WHERE Id = @Id
+			IF @@ROWCOUNT = 1
+				SET @Result = N'Xóa thành công';
+			ELSE 
+				SET @Result = N'Xóa thất bại';
+		END
+END
+GO
+/****** Object:  StoredProcedure [dbo].[DeleteProducer]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE	 PROCEDURE [dbo].[DeleteProducer]
+	@Id UNIQUEIDENTIFIER,
+	@Result NVARCHAR(MAX) OUTPUT
+AS
+	
+BEGIN
+	DECLARE @check INT = (SELECT COUNT(Id) FROM dbo.Product WHERE IdProducer = @Id)
+	begin
+	IF @check = 0
+		BEGIN
+			DELETE FROM dbo.Producer WHERE Id = @Id
+			SET @Result = N'Xóa nhà cung cấp thành công';
+		END
+	ELSE 
+		SET @Result = N'Nhà cung cấp không thể xóa vì đang có sản phẩm kinh doanh';
+	END;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[DeleteProduct]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[DeleteProduct]
+	@Id UNIQUEIDENTIFIER,
+	@Result NVARCHAR(MAX) OUT
+AS
+BEGIN
+SET NOCOUNT ON
+	BEGIN TRY
+		BEGIN TRANSACTION;
+
+		-- Xóa hình ảnh liên quan đến sản phẩm
+		DELETE FROM dbo.Image WHERE IdProduct = @Id;
+
+		-- Xóa chi tiết sản phẩm
+		DELETE FROM dbo.Product_Detail WHERE IdProduct = @Id;
+
+		-- Xóa sản phẩm chính
+		DELETE FROM dbo.Product WHERE Id = @Id;
+
+		COMMIT;
+		SET @Result = N'Xóa sản phẩm thành công'; -- Nếu thành công
+	END TRY
+	BEGIN CATCH
+		-- Nếu có lỗi, hủy bỏ giao dịch và đặt thông báo lỗi
+		ROLLBACK;
+		SET @Result = N'Lỗi khi xóa sản phẩm: ' + ERROR_MESSAGE(); -- Thông báo lỗi
+	END CATCH;
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[DeleteProdyctType]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [dbo].[DeleteProdyctType]
+	@Id Uniqueidentifier ,
+	@Result Nvarchar(Max) out
+as 
+begin
+	declare @check int = (select count(Id) from dbo.ProductType where Id = @Id)
+	if @check = 0 
+		begin
+			set @Result = N'Loại hàng hóa không tồn tại';
+		end	
+	else 
+		begin
+			Delete from ProductType where Id = @Id;
+			if @@RowCount = 1 
+				set @Result = N'Xóa thành công';
+			else 
+				Set @Result = 'Xóa thất bại'
+		end	
+end
+GO
+/****** Object:  StoredProcedure [dbo].[FindProduct]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- [FindProduct] 'Red', 1, 10
+CREATE PROCEDURE [dbo].[FindProduct]
+	@search NVARCHAR(MAX),
+    @pageIndex INT,
+    @pageSize INT
+AS
+BEGIN
+    DECLARE @totalRecords INT;
+
+    -- Tính tổng số bản ghi
+    SELECT @totalRecords = COUNT(*) FROM dbo.Product
+    WHERE (Name LIKE '%' + @search + '%' 
+        OR Description LIKE '%' + @search + '%' 
+        OR Material LIKE '%' + @search + '%' 
+        OR CONVERT(NVARCHAR(255), CAST(Price AS DECIMAL(38, 0))) LIKE '%' + @search + '%');
+
+    -- Tính vị trí bắt đầu của trang
+    DECLARE @startRow INT = (@pageIndex - 1) * @pageSize + 1;
+    -- Tính vị trí kết thúc của trang
+    DECLARE @endRow INT = @startRow + @pageSize - 1;
+
+    -- Lấy dữ liệu với phân trang
+    WITH ProductCTE AS
+    (
+        SELECT
+            p.Id,
+            p.Name,
+            p.Price,
+            p.IdProducer,
+            p.IdProductType,
+            p.Material,
+            p.Description,
+            p.IdDiscount, 
+            (
+                SELECT i.Img
+                FROM dbo.Image i
+                WHERE i.IdProduct = p.Id
+                FOR JSON PATH
+            ) AS img,
+            (
+                SELECT pd.Color, pd.Size, pd.Number, pd.Description
+                FROM dbo.Product_Detail pd
+                WHERE pd.IdProduct = p.Id
+                FOR JSON PATH
+            ) AS Product_Detail,
+            ROW_NUMBER() OVER (ORDER BY p.Id) AS RowNum
+        FROM dbo.Product p
+        WHERE EXISTS (
+            SELECT 1
+            FROM dbo.Image i
+            WHERE i.IdProduct = p.Id
+        ) OR EXISTS (
+            SELECT 1
+            FROM dbo.Product_Detail pd
+            WHERE pd.IdProduct = p.Id
+        )
+    )
+
+    -- Trả về kết quả phân trang
+    SELECT 
+        Id,
+        Name,
+        Price,
+        IdProducer,
+        IdProductType,
+        Material,
+        Description,
+        IdDiscount,
+        img,
+        Product_Detail,
+		@totalRecords AS TotalRecord
+    FROM ProductCTE
+    WHERE RowNum BETWEEN @startRow AND @endRow 
+        AND (Name LIKE '%' + @search + '%' 
+            OR Description LIKE '%' + @search + '%' 
+            OR Material LIKE '%' + @search + '%' 
+            OR CONVERT(NVARCHAR(255), CAST(Price AS DECIMAL(38, 0))) LIKE '%' + @search + '%');
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[GetAddress]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE procedure [dbo].[GetAddress] 
+	@Id uniqueidentifier
+as
+
+begin
+	select FirstName, LastName, Phone as PhoneNumber, Address from Users where Id = @Id
+end	
+GO
+/****** Object:  StoredProcedure [dbo].[GetAllCart]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+--	GetAllCart 1,10,1,null
+
+
+CREATE PROCEDURE [dbo].[GetAllCart]
+	@IdUser uniqueidentifier,
+	@pageIndex INT,
+	@pageSize Int	,
+	@search NVARCHAR(MAX),	
+	@totalRecords INT OUT
+AS
+BEGIN
+	-- Tính vị trí bắt đầu của trang
+    DECLARE @startRow INT = (@pageIndex - 1) * @pageSize + 1;
+    -- Tính vị trí kết thúc của trang
+    DECLARE @endRow INT = @startRow + @pageSize - 1;
+IF @search = '' OR @search = NULL
+	begin
+
+	SELECT @totalRecords = (SELECT COUNT(c.Id) FROM dbo.Cart c JOIN dbo.Product_Detail pd ON c.IdProduct = pd.Id 
+		JOIN dbo.Product p ON p.Id = pd.IdProduct 
+		JOIN dbo.Shop s ON s.Id = p.IdShop
+		JOIN dbo.Image img ON img.IdProduct = p.Id 
+		where img.UsedStatus = 1
+		and s.IdUser = @IdUser );
+	WITH Cart_Tmp AS
+    (
+		SELECT  c.Id, c.Number , c.TotalPrice, pd.Color, pd.Size, p.Name , img.Img, s.BrandName ,ROW_NUMBER() OVER (ORDER BY(Name)) AS RowNum FROM dbo.Cart c 
+		JOIN dbo.Product_Detail pd ON c.IdProduct = pd.Id 
+		JOIN dbo.Product p ON p.Id = pd.IdProduct 
+		JOIN dbo.Shop s ON s.Id = p.IdShop
+		JOIN dbo.Image img ON img.IdProduct = p.Id 
+		where img.UsedStatus = 1
+		and s.IdUser = @IdUser
+	)
+
+	SELECT  ctmp.Id,  ctmp.Number , ctmp.TotalPrice, ctmp.Color, ctmp.Size, ctmp.Name AS NameProduct, ctmp.Img, ctmp.BrandName, @totalRecords AS TotalRecords 
+	FROM Cart_Tmp ctmp 
+	WHERE ctmp.RowNum BETWEEN @startRow AND @endRow
+	END
+ELSE 
+	BEGIN
+		SELECT @totalRecords = (SELECT COUNT(c.Id) FROM dbo.Cart c  JOIN dbo.Product_Detail pd ON c.IdProduct = pd.Id 
+		JOIN dbo.Product p ON p.Id = pd.IdProduct 
+		JOIN dbo.Shop s ON s.Id = p.IdShop
+		JOIN dbo.Image img ON img.IdProduct = p.Id 
+		where img.UsedStatus = 1
+		and s.IdUser = @IdUser);
+	WITH Cart_Tmp AS
+    (
+		SELECT c.Id,  c.Number , c.TotalPrice, pd.Color, pd.Size, p.Name , img.Img, s.BrandName ,ROW_NUMBER() OVER (ORDER BY(Name)) AS RowNum FROM dbo.Cart c 
+		JOIN dbo.Product_Detail pd ON c.IdProduct = pd.Id 
+		JOIN dbo.Product p ON p.Id = pd.IdProduct 
+		JOIN dbo.Shop s ON s.Id = p.IdShop
+		JOIN dbo.Image img ON img.IdProduct = p.Id
+		where img.UsedStatus = 1
+		and s.IdUser = @IdUser
+		AND CONVERT(NVARCHAR(255),CAST(c.TotalPrice AS DECIMAL(38,0))) LIKE '%' + @search + '%'
+	OR pd.Color LIKE '%' + @search + '%'
+	OR pd.Size LIKE '%' + @search + '%'
+	OR p.Name LIKE '%' + @search + '%'
+	OR s.BrandName LIKE '%' + @search + '%'
+	)
+
+	SELECT  ctmp.Id, ctmp.Number , ctmp.TotalPrice, ctmp.Color, ctmp.Size, ctmp.Name AS NameProduct, ctmp.Img, ctmp.BrandName, @totalRecords AS TotalRecords FROM Cart_Tmp ctmp 
+	WHERE ctmp.RowNum BETWEEN @startRow AND @endRow
+	AND CONVERT(NVARCHAR(255),CAST(ctmp.TotalPrice AS DECIMAL(38,0))) LIKE '%' + @search + '%'
+	OR ctmp.Color LIKE '%' + @search + '%'
+	OR ctmp.Size LIKE '%' + @search + '%'
+	OR ctmp.Name LIKE '%' + @search + '%'
+	OR ctmp.BrandName LIKE '%' + @search + '%'
+
+	END
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetALLOrder]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+--	GetALLOrder '13E2096D-A2E1-4301-884F-613D5598BFBA', 1, 10, N'Embroidered Lapel', 1
+
+CREATE procedure [dbo].[GetALLOrder]
+	@Id uniqueidentifier ,
+	@pageIndex int,
+	@pageSize int,
+	@search Nvarchar(Max),
+	@totalRecords int  out
+as
+
+begin
+	-- Tính vị trí bắt đầu của trang
+    DECLARE @startRow INT = (@pageIndex - 1) * @pageSize + 1;
+    -- Tính vị trí kết thúc của trang
+    DECLARE @endRow INT = @startRow + @pageSize - 1;
+	if @search = null or @search = ''
+		begin
+			select @totalRecords =  count(o.Id)  from Orders o join Product_detail pd on o.IdProductDetail = pd.Id
+				join Product p on p.Id = pd.IdProduct
+				join Image img on img.IdProduct = p.Id
+				join Shop s on s.IdUser = o.IdUser
+				where  img.UsedStatus = 1 and o.IdUser = @Id;
+			with table_tmp 
+			as
+			(
+				select  o.PriceShip, o.TotalPrice, o.UsedStatus, pd.Color, pd.Size, o.Number, p.Name, p.Price, img.Img, s.BrandName, ROW_NUMBER() OVER (ORDER BY(Name)) AS RowNum from Orders o 
+				join Product_detail pd on o.IdProductDetail = pd.Id
+				join Product p on p.Id = pd.IdProduct
+				join Image img on img.IdProduct = p.Id
+				join Shop s on s.IdUser = o.IdUser
+				where  img.UsedStatus = 1 and o.IdUser = @Id
+			)
+			select tmp.Name, tmp.Price, tmp.Color, tmp.Size, tmp.BrandName ,tmp.PriceShip as ShipPrice, tmp.Number, tmp.TotalPrice, tmp.UsedStatus, tmp.Img, @totalRecords as TotalRecords  from table_tmp tmp WHERE tmp.RowNum BETWEEN @startRow AND @endRow
+		end
+	else 
+		begin
+			select @totalRecords =  count(o.Id)  from Orders o join Product_detail pd on o.IdProductDetail = pd.Id
+				join Product p on p.Id = pd.IdProduct
+				join Image img on img.IdProduct = p.Id
+				join Shop s on s.IdUser = o.IdUser
+				where  img.UsedStatus = 1 
+				and o.IdUser = @Id 
+				and (
+					CONVERT(NVARCHAR(255),CAST(o.TotalPrice AS DECIMAL(38,0))) LIKE '%' + @search + '%' or
+					CONVERT(NVARCHAR(255),CAST(o.PriceShip AS DECIMAL(38,0))) LIKE '%' + @search + '%' or
+					pd.Color LIKE '%' + @search + '%' or
+					p.Name LIKE '%' + @search + '%' or
+					CONVERT(NVARCHAR(255),CAST(p.Price AS DECIMAL(38,0))) LIKE '%' + @search + '%' or
+					CONVERT(NVARCHAR(255),CAST(o.Number AS DECIMAL(38,0))) LIKE '%' + @search + '%'  or
+					s.BrandName like '%' + @search + '%'
+					)
+					;
+			with table_tmp 
+			as
+			(
+				select distinct  o.PriceShip, o.TotalPrice, o.UsedStatus, pd.Color, pd.Size, o.Number, p.Name, p.Price, img.Img, s.BrandName ,ROW_NUMBER() OVER (ORDER BY(Name)) AS RowNum from Orders o 
+				join Product_detail pd on o.IdProductDetail = pd.Id
+				join Product p on p.Id = pd.IdProduct
+				join Image img on img.IdProduct = p.Id
+				join Shop s on s.IdUser = o.IdUser
+				where  img.UsedStatus = 1 
+				and o.IdUser = @Id
+				and (
+					CONVERT(NVARCHAR(255),CAST(o.TotalPrice AS DECIMAL(38,0))) LIKE '%' + @search + '%' or
+					CONVERT(NVARCHAR(255),CAST(o.PriceShip AS DECIMAL(38,0))) LIKE '%' + @search + '%' or
+					pd.Color LIKE '%' + @search + '%' or
+					p.Name LIKE '%' + @search + '%' or
+					CONVERT(NVARCHAR(255),CAST(p.Price AS DECIMAL(38,0))) LIKE '%' + @search + '%' or
+					CONVERT(NVARCHAR(255),CAST(o.Number AS DECIMAL(38,0))) LIKE '%' + @search + '%' or
+					s.BrandName Like '%' + @search +'%'
+					)
+			)
+			select tmp.Name, tmp.Price, tmp.Color, tmp.Size, tmp.PriceShip  as ShipPrice, tmp.Number, tmp.BrandName ,tmp.TotalPrice, tmp.Img , tmp.UsedStatus, @totalRecords as TotalRecords  from table_tmp tmp 
+			WHERE tmp.RowNum BETWEEN @startRow AND @endRow
+			and
+					CONVERT(NVARCHAR(255),CAST(tmp.TotalPrice AS DECIMAL(38,0))) LIKE '%' + @search + '%' or
+					CONVERT(NVARCHAR(255),CAST(tmp.PriceShip AS DECIMAL(38,0))) LIKE '%' + @search + '%' or
+					tmp.Color LIKE '%' + @search + '%' or
+					tmp.Name LIKE '%' + @search + '%' or
+					CONVERT(NVARCHAR(255),CAST(tmp.Price AS DECIMAL(38,0))) LIKE '%' + @search + '%' or
+					CONVERT(NVARCHAR(255),CAST(tmp.Number AS DECIMAL(38,0))) LIKE '%' + @search + '%' or
+					tmp.BrandName Like '%' + @search +'%'
+		end	
+end
+GO
+/****** Object:  StoredProcedure [dbo].[GetAllProducer]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+--	GetAllProducer 1, 10,1
+
+CREATE  PROCEDURE [dbo].[GetAllProducer]
+	@pageIndex INT,
+	@pageSize INT,
+	@totalRecords INT OUTPUT
+AS
+
+BEGIN
+	SET NOCOUNT ON
+	SELECT @totalRecords = (SELECT COUNT(Id) FROM dbo.Producer)
+
+	-- Tính vị trí bắt đầu của trang
+    DECLARE @startRow INT = (@pageIndex - 1) * @pageSize + 1;
+    -- Tính vị trí kết thúc của trang
+    DECLARE @endRow INT = @startRow + @pageSize - 1;
+
+	;WITH Table_Tmp AS 
+	(
+	SELECT *, ROW_NUMBER() OVER (ORDER BY(Name)) AS RowNum FROM dbo.Producer
+	)
+	SELECT *, @totalRecords AS TotalRecord FROM Table_Tmp
+	WHERE Table_Tmp.RowNum BETWEEN @startRow AND @endRow
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetAllProduct]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+--	[GetAllProduct] 1,10
+
+
+CREATE PROCEDURE [dbo].[GetAllProduct] 
+    @pageIndex INT,
+    @pageSize INT,
+	@productType Nvarchar(255)
+AS
+BEGIN
+    DECLARE @totalRecords INT;
+
+    -- Tính tổng số bản ghi
+    SELECT @totalRecords = COUNT(*) FROM dbo.Product;
+
+    -- Tính vị trí bắt đầu của trang
+    DECLARE @startRow INT = (@pageIndex - 1) * @pageSize + 1;
+    -- Tính vị trí kết thúc của trang
+    DECLARE @endRow INT = @startRow + @pageSize - 1;
+
+    -- Lấy dữ liệu với phân trang
+    WITH ProductCTE AS
+    (
+        SELECT
+            p.Id,
+            p.Name,
+            p.Price,
+            p.IdProducer,
+            p.IdProductType,
+            p.Material,
+            p.Description,
+            p.IdDiscount, 
+            (
+                SELECT i.Img
+                FROM dbo.Image i
+                WHERE i.IdProduct = p.Id
+                FOR JSON PATH
+            ) AS img,
+            (
+                SELECT pd.Color, pd.Size, pd.Number, pd.Description, pd.Id, pd.IdProduct
+                FROM dbo.Product_Detail pd
+                WHERE pd.IdProduct = p.Id
+                FOR JSON PATH
+            ) AS Product_Detail,
+            ROW_NUMBER() OVER (ORDER BY p.Id) AS RowNum
+        FROM dbo.Product p
+		join dbo.ProductType pt on p.IdProductType = pt.Id
+        WHERE( EXISTS (
+            SELECT 1
+            FROM dbo.Image i
+            WHERE i.IdProduct = p.Id
+        ) OR EXISTS (
+            SELECT 1
+            FROM dbo.Product_Detail pd
+            WHERE pd.IdProduct = p.Id
+        )) and pt.Name = @productType
+    )
+
+    -- Trả về kết quả phân trang
+    SELECT 
+        Id,
+        Name,
+        Price,
+        IdProducer,
+        IdProductType,
+        Material,
+        Description,
+        IdDiscount,
+        img,
+        Product_Detail,
+		@totalRecords AS TotalRecord
+    FROM ProductCTE
+    WHERE RowNum BETWEEN @startRow AND @endRow;
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[GetAllProductMyShop]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE procedure [dbo].[GetAllProductMyShop]
+	@IdUser uniqueidentifier,
+	@search Nvarchar(max) 
+as
+begin
+    if @search = null or @search = ''
+		begin
+			SELECT
+				p.Id,
+				p.Name AS NameProduct,
+				img.Img,
+				pt.Name AS Category,
+				SUM(pd.Number) AS Quantity,
+				SUM(o.Number) AS Sold
+			FROM
+				product p
+			JOIN
+				Image img ON p.Id = img.IdProduct
+			JOIN
+				ProductType pt ON p.IdProductType = pt.Id
+			JOIN
+				Product_Detail pd ON pd.IdProduct = p.Id
+			left JOIN
+				Orders o ON o.IdProductDetail = pd.Id
+			WHERE
+				img.UsedStatus = 1
+				and
+				p.CreateBy = @IdUser
+			GROUP BY
+				p.Name, img.Img, pt.Name, p.Id
+		end	
+	else 
+		begin
+			SELECT
+				p.Id,
+				p.Name AS NameProduct,
+				img.Img,
+				pt.Name AS Category,
+				SUM(pd.Number) AS Quantity,
+				SUM(o.Number) AS Sold
+			FROM
+				product p
+			JOIN
+				Image img ON p.Id = img.IdProduct
+			JOIN
+				ProductType pt ON p.IdProductType = pt.Id
+			JOIN
+				Product_Detail pd ON pd.IdProduct = p.Id
+			left JOIN
+				Orders o ON o.IdProductDetail = pd.Id
+			WHERE
+				img.UsedStatus = 1
+				and
+				p.CreateBy = @IdUser 
+				and (
+					p.Name like '%' + @search + '%'
+					or pt.Name like '%' + @search + '%'
+				)
+			GROUP BY
+				p.Name, img.Img, pt.Name, p.Id
+		end
+end	
+GO
+/****** Object:  StoredProcedure [dbo].[GetAllProductType]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE Procedure [dbo].[GetAllProductType] 
+	@pageIndex int, 
+	@pageSize Int,
+	@search Nvarchar(Max),
+	@totalRecords int out 
+as
+begin
+	
+
+	-- Tính vị trí bắt đầu của trang
+    DECLARE @startRow INT = (@pageIndex - 1) * @pageSize + 1;
+    -- Tính vị trí kết thúc của trang
+    DECLARE @endRow INT = @startRow + @pageSize - 1;
+	if @search = null or @search = ''
+		begin
+			SELECT @totalRecords = (SELECT COUNT(Id) FROM dbo.ProductType)
+			;WITH Table_Tmp AS 
+			(
+				SELECT 
+					pt.Id, 
+					pt.Name, 
+					pt.Description, 
+					cu.FullName as CreateBy,
+					CASE 
+						WHEN mu.FullName IS NOT NULL THEN mu.FullName 
+					END AS ModifierName, 
+					ROW_NUMBER() OVER (ORDER BY pt.Name) AS RowNum
+				FROM ProductType pt
+				LEFT JOIN Users mu ON pt.ModifiedBy = mu.Id
+				LEFT JOIN Users cu ON pt.CreateBy = cu.Id
+			)
+			SELECT 
+				Id, 
+				Name, 
+				Description, 
+				CreateBy,
+				ModifierName AS ModifierBy, 
+				RowNum
+			FROM Table_Tmp
+			WHERE RowNum BETWEEN @startRow AND @endRow;
+
+
+		end
+	else 
+		begin
+		SELECT @totalRecords = (SELECT COUNT(Id) FROM dbo.ProductType where Name like '%' + @search + '%' or Description like '%' + @search + '%')
+			;WITH Table_Tmp AS 
+			(
+				SELECT 
+					pt.Id, 
+					pt.Name, 
+					pt.Description, 
+					cu.FullName as CreateBy,
+					CASE 
+						WHEN mu.FullName IS NOT NULL THEN mu.FullName 
+					END AS ModifierName, 
+					ROW_NUMBER() OVER (ORDER BY pt.Name) AS RowNum
+				FROM ProductType pt
+				LEFT JOIN Users mu ON pt.ModifiedBy = mu.Id
+				LEFT JOIN Users cu ON pt.CreateBy = cu.Id
+				where pt.Name like '%' + @search + '%' or pt.Description like '%' + @search + '%'
+			)
+			SELECT 
+				Id, 
+				Name, 
+				Description, 
+				CreateBy,
+				ModifierName AS ModifierBy, 
+				RowNum
+			FROM Table_Tmp
+			WHERE RowNum BETWEEN @startRow AND @endRow;
+		end	
+end
+GO
+/****** Object:  StoredProcedure [dbo].[GetByEmail]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE	 PROCEDURE [dbo].[GetByEmail]
+	@Email NVARCHAR(Max)
+AS
+
+BEGIN
+	SELECT * FROM dbo.Users WHERE Email = @Email;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetProducerBySearch]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+--	GetAllProducer 1, 10,1
+
+create  PROCEDURE [dbo].[GetProducerBySearch]
+	@search NVARCHAR(MAX),
+	@pageIndex INT,
+	@pageSize INT,
+	@totalRecords INT OUTPUT
+AS
+
+BEGIN
+	SET NOCOUNT ON
+	SELECT @totalRecords = (SELECT COUNT(Id) FROM dbo.Producer WHERE Name LIKE '%' + @search+ '%' 
+		OR Country LIKE '%' + @search+ '%' 
+		OR Address LIKE '%' + @search+ '%' 
+		OR Description LIKE '%' + @search+ '%'
+	)
+
+	-- Tính vị trí bắt đầu của trang
+    DECLARE @startRow INT = (@pageIndex - 1) * @pageSize + 1;
+    -- Tính vị trí kết thúc của trang
+    DECLARE @endRow INT = @startRow + @pageSize - 1;
+
+	;WITH Table_Tmp AS 
+	(
+	SELECT *, ROW_NUMBER() OVER (ORDER BY(Name)) AS RowNum FROM dbo.Producer
+	WHERE Name LIKE '%' + @search+ '%' 
+	OR Country LIKE '%' + @search+ '%' 
+	OR Address LIKE '%' + @search+ '%' 
+	OR Description LIKE '%' + @search+ '%'
+	)
+	SELECT *, @totalRecords AS TotalRecord FROM Table_Tmp
+	WHERE Table_Tmp.RowNum BETWEEN @startRow AND @endRow
+	AND 
+		Name LIKE '%' + @search+ '%' 
+		OR Country LIKE '%' + @search+ '%'
+		OR Address LIKE '%' + @search+ '%'
+		OR Description LIKE '%' + @search+ '%'
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SignUpUser]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROCEDURE [dbo].[SignUpUser]
+    @FirstName NVARCHAR(255),
+    @LastName NVARCHAR(255),
+    @Email NVARCHAR(255),
+    @Password NVARCHAR(255),
+    @PhoneNumber BIGINT,
+	@Address NVARCHAR(MAX),
+	@Roles NVARCHAR(255),
+    @Gender INT,
+    @DateOfBirth DATE,
+    @Avata NVARCHAR(MAX)
+AS
+BEGIN
+    DECLARE @IdUser UNIQUEIDENTIFIER = NEWID();
+    DECLARE @IdRole UNIQUEIDENTIFIER = NEWID();
+    DECLARE @IdRoleMappingUser UNIQUEIDENTIFIER = NEWID();
+    DECLARE @ResultMessage NVARCHAR(255);
+
+    -- Kiểm tra xem tên đăng nhập hoặc email đã tồn tại
+    IF NOT EXISTS (SELECT 1 FROM dbo.Users WHERE Email = @Email)
+    BEGIN
+        BEGIN TRY
+            -- Bắt đầu giao dịch
+            BEGIN TRANSACTION;
+
+            -- Thêm dữ liệu vào bảng Users
+            INSERT INTO dbo.Users (Id, FirstName, LastName, FullName, Email, PassWordHas, Phone,  Address, Gender, DateOfBirth, Avata, UsedState, CreateDate, ModifiedDate, Roles)
+            VALUES (@IdUser, @FirstName, @LastName, (@FirstName + ' ' + @LastName), @Email, @Password, @PhoneNumber, @Address ,@Gender, @DateOfBirth, @Avata, 0, GETUTCDATE(), GETUTCDATE(), @Roles);
+            -- Commit giao dịch
+			COMMIT TRANSACTION;
+
+            -- Trả về kết quả thành công
+            SET @ResultMessage = 'SignUp Success';
+        END TRY
+        BEGIN CATCH
+            -- Nếu có lỗi, rollback giao dịch
+            ROLLBACK TRANSACTION;
+            SET @ResultMessage = ERROR_MESSAGE();
+        END CATCH;
+    END
+    ELSE
+    BEGIN
+        -- Email đã tồn tại, trả về thông báo lỗi
+        SET @ResultMessage = 'Tên đăng nhập hoặc email đã tồn tại';
+    END
+
+    -- Trả về kết quả
+    SELECT @ResultMessage AS ResultMessage;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SignUpUserShop]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE	 PROCEDURE [dbo].[SignUpUserShop]
+	@IdUser UNIQUEIDENTIFIER,
+    @FirstName NVARCHAR(255),
+    @LastName NVARCHAR(255),
+    @Email NVARCHAR(255),
+    @Password NVARCHAR(255),
+    @PhoneNumber BIGINT,
+	@Address NVARCHAR(MAX),
+	@IdShop UNIQUEIDENTIFIER,
+	@BrandName NVARCHAR(Max),
+	@AvataShop NVARCHAR(MAX),
+	@Roles NVARCHAR(255),
+    @Gender INT,
+    @DateOfBirth DATE,
+    @Avata NVARCHAR(MAX)
+AS
+BEGIN
+    DECLARE @ResultMessage NVARCHAR(255);
+
+    -- Kiểm tra xem tên đăng nhập hoặc email đã tồn tại
+    IF NOT EXISTS (SELECT 1 FROM dbo.Users WHERE Email = @Email) AND NOT EXISTS (SELECT 1 FROM dbo.Shop WHERE BrandName = @BrandName)
+    BEGIN
+        BEGIN TRY
+            -- Bắt đầu giao dịch
+            BEGIN TRANSACTION;
+
+            -- Thêm dữ liệu vào bảng Users
+            INSERT INTO dbo.Users (Id, FirstName, LastName, FullName, Email, PassWordHas, Phone,  Address, Gender, DateOfBirth, Avata, UsedState, CreateDate, ModifiedDate, Roles)
+            VALUES (@IdUser, @FirstName, @LastName, (@FirstName + ' ' + @LastName), @Email, @Password, @PhoneNumber, @Address ,@Gender, @DateOfBirth, @Avata, 0, GETUTCDATE(), GETUTCDATE(), @Roles);
+            
+			INSERT INTO dbo.Shop
+			(
+			    Id,
+			    IdUser,
+			    BrandName,
+			    Avata
+			)
+			VALUES
+			(    @IdShop, -- Id - uniqueidentifier
+			    @IdUser, -- IdUser - uniqueidentifier
+			    @BrandName, -- BrandName - nvarchar(max)
+			    @AvataShop  -- Avata - nvarchar(max)
+			    )
+			
+			-- Commit giao dịch
+			COMMIT TRANSACTION;
+
+            -- Trả về kết quả thành công
+            SET @ResultMessage = 'SignUp Success';
+        END TRY
+        BEGIN CATCH
+            -- Nếu có lỗi, rollback giao dịch
+            ROLLBACK TRANSACTION;
+            SET @ResultMessage = ERROR_MESSAGE();
+        END CATCH;
+    END
+    ELSE
+    BEGIN
+        -- Email đã tồn tại, trả về thông báo lỗi
+        SET @ResultMessage = 'Email name or brandname already exists';
+    END
+
+    -- Trả về kết quả
+    SELECT @ResultMessage AS ResultMessage;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[UpdateAddress]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE procedure [dbo].[UpdateAddress]
+	@Id uniqueidentifier,
+	@FirstName Nvarchar(Max),
+	@LastName Nvarchar(Max),
+	@Phone int,
+	@Address Nvarchar(MAx),
+	@Result Nvarchar(Max) out
+as
+begin
+	Update Users set FirstName = @FirstName, LastName = @LastName, Phone = @Phone, Address= @Address where Id = @Id
+	if @@RowCount = 1
+		set @Result = N'Sửa địa chỉ thành công';
+	else 
+		set @Result = N'Sửa địa chỉ thất bại';
+end	
+GO
+/****** Object:  StoredProcedure [dbo].[UpdateCart]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[UpdateCart] 
+	@Id UNIQUEIDENTIFIER,
+	@IdProduct UNIQUEIDENTIFIER,
+	@Number INT ,
+	@Result NVARCHAR(MAX) OUT
+
+AS
+
+BEGIN
+	DECLARE @check INT = (SELECT COUNT(Id) FROM dbo.Cart WHERE Id = @Id)
+	IF @check = 0
+		SET @Result = N'Không tồn tại';
+	ELSE 
+		BEGIN
+			UPDATE dbo.Cart 
+			SET 
+				IdProduct = @IdProduct,
+				Number = @Number
+			WHERE Id = @Id
+			IF @@ROWCOUNT = 1
+				SET @Result = N'Sửa thành công';
+			ELSE 
+				SET @Result = N'Sửa thất bại';
+		END
+END
+GO
+/****** Object:  StoredProcedure [dbo].[UpdateProducer]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[UpdateProducer] 
+	@Id UNIQUEIDENTIFIER,
+	@Name NVARCHAR(MAX),
+	@Country NVARCHAR(MAX),
+	@Address NVARCHAR(MAX),
+	@Description NVARCHAR(MAX),
+	@ModifiedBy UNIQUEIDENTIFIER,
+	@ModifiedDate DATE,
+	@Result NVARCHAR(MAX) OUT
+AS
+
+BEGIN
+	UPDATE dbo.Producer 
+	SET 
+		Name = @Name,
+		Country = @Country,
+		Address = @Address,
+		Description = @Description,
+		ModifiedBy = @ModifiedBy,
+		ModifiedDate = @ModifiedDate
+	WHERE Id = @Id
+		IF @@ROWCOUNT >=1  
+			SET @Result = N'Sửa nhà cung cấp thành công'
+		ELSE 
+			SET @Result = N'Sửa nhà cung cấp không thành công'
+END
+GO
+/****** Object:  StoredProcedure [dbo].[UpdateProduct]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[UpdateProduct]
+	@Id UNIQUEIDENTIFIER,
+	@Name NVARCHAR(MAX),
+	@IdUser UNIQUEIDENTIFIER,
+	@IdProducer UNIQUEIDENTIFIER,
+	@IdProductType UNIQUEIDENTIFIER,
+	@Material NVARCHAR(MAX),
+	@Price FLOAT,
+	@Description NVARCHAR(MAX),
+	@IdDiscount UNIQUEIDENTIFIER,
+	@CreateBy UNIQUEIDENTIFIER,
+	@CreateDate DATE,
+	@ModifiedDate DATE,
+	@Images NVARCHAR(MAX), -- Chuỗi JSON chứa danh sách ảnh
+	@ProductDetails NVARCHAR(MAX), -- Chuỗi JSON chứa danh sách chi tiết sản phẩm
+	@Result NVARCHAR(MAX) OUT
+AS
+BEGIN
+	SET NOCOUNT ON
+	DECLARE @IdShop UNIQUEIDENTIFIER = (SELECT Id FROM dbo.Shop WHERE IdUser = @IdUser);
+	BEGIN	
+		BEGIN TRAN;
+
+		-- Cập nhật dữ liệu trong bảng Product
+		UPDATE dbo.Product 
+		SET 
+			Name = @Name,
+			IdProducer = @IdProducer,
+			IdProductType = @IdProductType,
+			Material = @Material,
+			Price = @Price, 
+			Description = @Description,
+			ModifiedBy = @IdUser,
+			ModifiedDate = GETDATE(),
+			IdDiscount = @IdDiscount,
+			IdShop = @IdShop
+		WHERE Id = @Id;
+
+		-- Cập nhật dữ liệu trong bảng Image từ chuỗi JSON @Images
+		UPDATE i
+		SET Img = j.Img
+		FROM dbo.Image i
+		INNER JOIN OPENJSON(@Images) WITH (Img NVARCHAR(MAX) '$.Img') j ON i.IdProduct = @Id
+		WHERE i.IdProduct = @Id;
+
+		-- Cập nhật dữ liệu trong bảng Product_Detail từ chuỗi JSON @ProductDetails
+		UPDATE pd
+		SET 
+			Number = j.Number,
+			Description = j.Description,
+			Color = j.Color,
+			Size = j.Size
+		FROM dbo.Product_Detail pd
+		INNER JOIN OPENJSON(@ProductDetails) WITH (Number INT '$.Number', Description NVARCHAR(MAX) '$.Description', Color NVARCHAR(MAX) '$.Color', Size NVARCHAR(MAX) '$.Size') j 
+		ON pd.IdProduct = @Id
+		WHERE pd.IdProduct = @Id;
+
+		COMMIT TRAN;
+		SET @Result = N'Sửa sản phẩm thành công'; -- Đặt thông báo thành công khi tất cả các bước đều thành công
+	END
+END
+GO
+/****** Object:  StoredProcedure [dbo].[UpdateProductType]    Script Date: 24/09/2023 3:14:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE procedure [dbo].[UpdateProductType]
+	@Id Uniqueidentifier ,
+	@Name Nvarchar(Max),
+	@Description Nvarchar(Max),
+	@ModifiedBy Uniqueidentifier ,
+	@ModifiedDate Date,
+	@Result Nvarchar(Max) out 
+as
+
+begin
+	Update ProductType 
+	set 
+		Name = @Name,
+		Description = @Description,
+		ModifiedBy = @ModifiedBy,
+		ModifiedDate = @ModifiedDate
+	where Id = @Id
+	IF @@ROWCOUNT >=1  
+			SET @Result = N'Sửa loại sản phẩm thành công'
+		ELSE 
+			SET @Result = N'Sửa loại sản phẩm không thành công'
+END
+GO
